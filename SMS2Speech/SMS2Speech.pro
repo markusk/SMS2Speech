@@ -14,6 +14,7 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
 			mainwindow.cpp \
+			circuit.cpp \
 			direcsSerial.cpp \
 			interfaceAvr.cpp \
 			QtSpeech_mac.cpp \
@@ -22,6 +23,7 @@ SOURCES += main.cpp\
 
 
 HEADERS  += mainwindow.h \
+			circuit.h \
 			direcsSerial.h \
 			interfaceAvr.h \
 			QtSpeech.h \
