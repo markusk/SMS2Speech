@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <QDateTime>
 
+#include "interfaceAvr.h"
+#include "speakThread.h"
+
 namespace Ui {
 class MainWindow;
 }
