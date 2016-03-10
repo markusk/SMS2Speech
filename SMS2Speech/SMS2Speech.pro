@@ -13,19 +13,19 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-		mainwindow.cpp \
-				direcsSerial.cpp \
-				interfaceAvr.cpp \
-				QtSpeech_mac.cpp \
-				speakThread.cpp
+			mainwindow.cpp \
+			direcsSerial.cpp \
+			interfaceAvr.cpp \
+			QtSpeech_mac.cpp \
+			speakThread.cpp
 
 
 
 HEADERS  += mainwindow.h \
-				direcsSerial.h \
-				interfaceAvr.h \
-				QtSpeech.h \
-				speakThread.h
+			direcsSerial.h \
+			interfaceAvr.h \
+			QtSpeech.h \
+			speakThread.h
 
 
 FORMS    += mainwindow.ui
