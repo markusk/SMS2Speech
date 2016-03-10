@@ -27,10 +27,8 @@ public slots:
 	void appendLog(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true);
 
 protected slots:
-	/**
-	Action if a menu item or a toolbar button is clicked
-	*/
 	void on_pushButtonQuit_clicked();
+	void on_pushButtonSendCommand_clicked();
 
 signals:
 	/**

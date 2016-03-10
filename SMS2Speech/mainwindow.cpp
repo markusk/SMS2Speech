@@ -18,6 +18,11 @@ void MainWindow::on_pushButtonQuit_clicked()
 	close();
 }
 
+void MainWindow::on_pushButtonSendCommand_clicked()
+{
+	appendLog("Sending command...");
+}
+
 void MainWindow::appendLog(QString text, bool CR, bool sayIt, bool addTimestamp)
 {
 	if (addTimestamp == true)
