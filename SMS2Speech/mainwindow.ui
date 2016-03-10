@@ -49,7 +49,7 @@
       <height>33</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout1">
      <item>
       <widget class="QLineEdit" name="lineEditInput">
        <property name="statusTip">
@@ -80,14 +80,10 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QPlainTextEdit" name="plainTextEditOutput">
-       <property name="statusTip">
-        <string>Output received from the Arduino</string>
-       </property>
-      </widget>
+      <widget class="QTextEdit" name="textEditOutput"/>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout">
+      <layout class="QVBoxLayout" name="verticalLayout1">
        <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
@@ -129,9 +125,9 @@
     <property name="title">
      <string>SMS2Speech</string>
     </property>
-    <addaction name="action_ber_SMS2Speech"/>
+    <addaction name="actionAbout"/>
     <addaction name="separator"/>
-    <addaction name="actionSMS2Speech_beenden"/>
+    <addaction name="actionQuit"/>
    </widget>
    <addaction name="menuSMS2Speech"/>
   </widget>
@@ -144,28 +140,20 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="action_ber_SMS2Speech">
+  <action name="actionAbout">
    <property name="text">
-    <string>Über SMS2Speech</string>
+    <string>About SMS2Speech</string>
    </property>
   </action>
-  <action name="actionSMS2Speech_beenden">
+  <action name="actionQuit">
    <property name="text">
-    <string>SMS2Speech beenden</string>
+    <string>Quit SMS2Speech</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
    </property>
   </action>
-  <action name="actionQuit">
-   <property name="text">
-    <string>Quit</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Q</string>
-   </property>
-  </action>
-  <action name="actionSend_Command">
+  <action name="actionSendCommand">
    <property name="text">
     <string>Send Command</string>
    </property>
