@@ -30,7 +30,7 @@ void MainWindow::on_pushButtonConnect_clicked()
 	//-------------------------------------------------------
 	// Open serial port from Arduino for communication
 	//-------------------------------------------------------
-	serialPortMicrocontroller = "/dev/tty.usbserial-AH02ZBXJ";
+	serialPortMicrocontroller = ui->lineEditUSBPort->text();
 
 	emit message(QString("Opening serial port %1...").arg(serialPortMicrocontroller));
 

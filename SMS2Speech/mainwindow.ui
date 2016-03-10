@@ -121,21 +121,37 @@
      </rect>
     </property>
     <property name="text">
-     <string>Start</string>
+     <string>USB-Port</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButtonConnect">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>20</y>
-      <width>110</width>
-      <height>32</height>
+      <x>10</x>
+      <y>30</y>
+      <width>711</width>
+      <height>33</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Connect</string>
-    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLineEdit" name="lineEditUSBPort">
+       <property name="statusTip">
+        <string>Put command for Arduino here</string>
+       </property>
+       <property name="text">
+        <string>/dev/tty.usbserial-AH02ZBXJ</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonConnect">
+       <property name="text">
+        <string>Connect</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
