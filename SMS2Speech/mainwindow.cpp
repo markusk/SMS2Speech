@@ -6,10 +6,19 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
+
+	// Interface to Arduino
+	interface1 = new InterfaceAvr();
+	speakThread = new SpeakThread();
 }
 
 MainWindow::~MainWindow()
 {
+//	emit message("Closing serial port to microcontroller...");
+	interface1->closeComPort();
+
+	delete interface1;
+	delete speakThread;
 	delete ui;
 }
 

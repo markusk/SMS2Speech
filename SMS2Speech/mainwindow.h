@@ -41,6 +41,8 @@ signals:
 
 private:
 	Ui::MainWindow *ui;
+	InterfaceAvr *interface1;
+	SpeakThread *speakThread;
 	QDateTime now; /// this is for the timestamp in the logs in the gui
 };
 
