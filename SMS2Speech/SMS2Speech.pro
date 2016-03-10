@@ -13,8 +13,20 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+		mainwindow.cpp \
+#				direcsSerial.cpp \
+				QtSpeech_mac.cpp \
+				speakThread.cpp
 
-HEADERS  += mainwindow.h
+
+
+HEADERS  += mainwindow.h \
+#				direcsSerial.h \
+				QtSpeech.h \
+				speakThread.h
+
 
 FORMS    += mainwindow.ui
+
+# For QtSpeech!
+LIBS *= -framework AppKit

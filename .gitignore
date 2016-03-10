@@ -1,5 +1,5 @@
 *.o
 ui_*.h
 moc_*.cpp
-build-SMS2Speech-Desktop-Debug/Makefile
-build-SMS2Speech-Desktop-Debug/SMS2Speech.app/Contents
+build-SMS2Speech-Desktop-Debug
+build-SMS2Speech-Desktop-Release
