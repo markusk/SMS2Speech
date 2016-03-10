@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QDateTime>
 
+#include "circuit.h"
 #include "interfaceAvr.h"
 #include "speakThread.h"
 
@@ -30,10 +31,21 @@ public slots:
 	void appendLog(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true);
 
 protected slots:
+	void on_pushButtonConnect_clicked();
 	void on_pushButtonQuit_clicked();
 	void on_pushButtonSendCommand_clicked();
 
 signals:
+	/**
+	Emits a string to the GUI log / console.
+	@sa Gui::appendLog()
+	@param text is the message to be emitted
+	@param CR is true when a CR/LF should be added at the end of the line (default)
+	@param sayIt is true when the text for the log also should be spoken (default=false)
+	@param addTimestamp If true, the a timestamp is added in front of the text. This parameter is optional.
+	*/
+	void message(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true);
+
 	/**
 	Emits a speak signal. This signal is sent to the speakThread.
 	*/
@@ -44,6 +56,7 @@ private:
 	InterfaceAvr *interface1;
 	SpeakThread *speakThread;
 	QDateTime now; /// this is for the timestamp in the logs in the gui
+	QString serialPortMicrocontroller;
 };
 
 #endif // MAINWINDOW_H

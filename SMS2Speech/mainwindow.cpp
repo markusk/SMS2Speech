@@ -10,16 +10,38 @@ MainWindow::MainWindow(QWidget *parent) :
 	// Interface to Arduino
 	interface1 = new InterfaceAvr();
 	speakThread = new SpeakThread();
+
+	// show messages in the GUI log or in the console
+	connect(this, SIGNAL( message(QString, bool, bool, bool) ), this, SLOT( appendLog(QString, bool, bool, bool) ));
 }
 
 MainWindow::~MainWindow()
 {
-//	emit message("Closing serial port to microcontroller...");
+	emit message("Closing serial port.");
 	interface1->closeComPort();
 
 	delete interface1;
 	delete speakThread;
 	delete ui;
+}
+
+void MainWindow::on_pushButtonConnect_clicked()
+{
+	//-------------------------------------------------------
+	// Open serial port from Arduino for communication
+	//-------------------------------------------------------
+	serialPortMicrocontroller = "/dev/tty.usbserial-AH02ZBXJ";
+
+	emit message(QString("Opening serial port %1...").arg(serialPortMicrocontroller));
+
+	if (interface1->openComPort(serialPortMicrocontroller) == false)
+	{
+		emit message("ERROR opeing serial port.");
+	}
+	else
+	{
+		emit message("Serial port opened.");
+	}
 }
 
 void MainWindow::on_pushButtonQuit_clicked()
@@ -29,7 +51,7 @@ void MainWindow::on_pushButtonQuit_clicked()
 
 void MainWindow::on_pushButtonSendCommand_clicked()
 {
-	appendLog("Sending command...");
+	emit message("Sending command...");
 }
 
 void MainWindow::appendLog(QString text, bool CR, bool sayIt, bool addTimestamp)
