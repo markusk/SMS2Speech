@@ -132,6 +132,7 @@ void setup()
 //      Serial.println(F("FONA 3G (European)")); break;
     default: 
 //      Serial.println(F("???")); break;
+        break;
   }
   
   // Print module IMEI number.
@@ -189,8 +190,7 @@ void loop()
 {
   static uint8_t string_started = 0;  // Sind wir jetzt im String?
 
-delay(5000);
-/*
+
   do
   {
     // do we have something on the USB port?
@@ -202,8 +202,6 @@ delay(5000);
       // max String length reached?
       if (inputString.length() >= stringSize)
       {
-        greenLED(OFF);
-        yellowLED(OFF);
         
         // clear string
         inputString = "";
