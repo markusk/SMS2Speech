@@ -59,6 +59,12 @@ void MainWindow::on_pushButtonConnect_clicked()
 	}
 }
 
+void MainWindow::on_pushButtonSpeak_clicked()
+{
+	// speak text from form
+	emit speak(ui->lineEditInputSpeech->text());
+}
+
 void MainWindow::on_pushButtonQuit_clicked()
 {
 	close();

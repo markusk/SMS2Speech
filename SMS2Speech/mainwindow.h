@@ -32,8 +32,9 @@ public slots:
 
 protected slots:
 	void on_pushButtonConnect_clicked();
-	void on_pushButtonQuit_clicked();
+	void on_pushButtonSpeak_clicked();
 	void on_pushButtonSendCommand_clicked();
+	void on_pushButtonQuit_clicked();
 
 signals:
 	/**

@@ -7,103 +7,63 @@
     <x>0</x>
     <y>0</y>
     <width>732</width>
-    <height>620</height>
+    <height>707</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>SMS2Speech</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QLabel" name="label">
+   <widget class="QWidget" name="layoutWidget_2">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>80</y>
-      <width>56</width>
-      <height>13</height>
+      <y>70</y>
+      <width>721</width>
+      <height>67</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Input</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>160</y>
-      <width>56</width>
-      <height>13</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Output</string>
-    </property>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>100</y>
-      <width>711</width>
-      <height>33</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout1">
+    <layout class="QVBoxLayout" name="verticalLayout_4">
      <item>
-      <widget class="QLineEdit" name="lineEditInput">
-       <property name="statusTip">
-        <string>Put command for Arduino here</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButtonSendCommand">
-       <property name="statusTip">
-        <string>Hit CMD+Enter to send command</string>
-       </property>
-       <property name="text">
-        <string>Send command</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>180</y>
-      <width>711</width>
-      <height>381</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <widget class="QTextEdit" name="textEditOutput"/>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout1">
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
        <item>
-        <spacer name="verticalSpacer">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Speech</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_4">
          <property name="orientation">
-          <enum>Qt::Vertical</enum>
+          <enum>Qt::Horizontal</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>20</width>
-           <height>40</height>
+           <width>40</width>
+           <height>20</height>
           </size>
          </property>
         </spacer>
        </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout1_2">
        <item>
-        <widget class="QPushButton" name="pushButtonQuit">
+        <widget class="QLineEdit" name="lineEditInputSpeech">
          <property name="statusTip">
-          <string>You want to quit? Click here!</string>
+          <string>Test the speech output. Enter text to speak here.</string>
          </property>
          <property name="text">
-          <string>Quit</string>
+          <string>Prima, es funktioniert. Nice, works as expected.</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButtonSpeak">
+         <property name="text">
+          <string>Speak!</string>
          </property>
         </widget>
        </item>
@@ -111,45 +71,188 @@
      </item>
     </layout>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>10</y>
-      <width>56</width>
-      <height>13</height>
+      <y>220</y>
+      <width>721</width>
+      <height>431</height>
      </rect>
     </property>
-    <property name="text">
-     <string>USB-Port</string>
-    </property>
-   </widget>
-   <widget class="QWidget" name="">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>30</y>
-      <width>711</width>
-      <height>33</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QLineEdit" name="lineEditUSBPort">
-       <property name="statusTip">
-        <string>Put command for Arduino here</string>
-       </property>
-       <property name="text">
-        <string>/dev/tty.usbserial-AH02ZBXJ</string>
-       </property>
-      </widget>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Output</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButtonConnect">
-       <property name="text">
-        <string>Connect</string>
-       </property>
-      </widget>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QTextEdit" name="textEditOutput">
+         <property name="statusTip">
+          <string>Logs all helpful messages.</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout1">
+         <item>
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButtonQuit">
+           <property name="statusTip">
+            <string>You want to quit? Click here!</string>
+           </property>
+           <property name="text">
+            <string>Quit</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>140</y>
+      <width>721</width>
+      <height>67</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Input</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout1">
+       <item>
+        <widget class="QLineEdit" name="lineEditInput">
+         <property name="statusTip">
+          <string>Enter command for Arduino here</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButtonSendCommand">
+         <property name="text">
+          <string>Send command</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>721</width>
+      <height>67</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>USB-Port</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLineEdit" name="lineEditUSBPort">
+         <property name="statusTip">
+          <string>Path to USB device. Can be changed manually.</string>
+         </property>
+         <property name="text">
+          <string>/dev/tty.usbserial-AH02ZBXJ</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButtonConnect">
+         <property name="text">
+          <string>Connect</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </widget>
@@ -167,9 +270,7 @@
     <property name="title">
      <string>SMS2Speech</string>
     </property>
-    <addaction name="actionAbout"/>
     <addaction name="separator"/>
-    <addaction name="actionQuit"/>
    </widget>
    <addaction name="menuSMS2Speech"/>
   </widget>
@@ -182,27 +283,6 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionAbout">
-   <property name="text">
-    <string>About SMS2Speech</string>
-   </property>
-  </action>
-  <action name="actionQuit">
-   <property name="text">
-    <string>Quit SMS2Speech</string>
-   </property>
-   <property name="shortcutContext">
-    <enum>Qt::ApplicationShortcut</enum>
-   </property>
-  </action>
-  <action name="actionSendCommand">
-   <property name="text">
-    <string>Send Command</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Return</string>
-   </property>
-  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
