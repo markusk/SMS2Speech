@@ -13,12 +13,27 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	// show messages in the GUI log or in the console
 	connect(this, SIGNAL( message(QString, bool, bool, bool) ), this, SLOT( appendLog(QString, bool, bool, bool) ));
+
+	// speech
+	connect(this, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
+
+	if (speakThread->isRunning() == false)
+	{
+		emit message("Starting speak thread...");
+		speakThread->start();
+		emit message("Speak thread started.");
+	}
 }
 
 MainWindow::~MainWindow()
 {
 	emit message("Closing serial port.");
 	interface1->closeComPort();
+
+	if (speakThread->isRunning())
+	{
+		speakThread->stop();
+	}
 
 	delete interface1;
 	delete speakThread;
