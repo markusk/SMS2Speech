@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 	ui->setupUi(this);
 
+	mutex = new QMutex();
 	// Interface to Arduino
 	interface1 = new InterfaceAvr();
 	speakThread = new SpeakThread();

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QDateTime>
+#include <QMutex>
 
 #include "circuit.h"
 #include "interfaceAvr.h"
@@ -58,6 +59,7 @@ private:
 	SpeakThread *speakThread;
 	QDateTime now; /// this is for the timestamp in the logs in the gui
 	QString serialPortMicrocontroller;
+	mutable QMutex *mutex; // make the threads thread-safe (e.g. senorThread, servo...)
 };
 
 #endif // MAINWINDOW_H
