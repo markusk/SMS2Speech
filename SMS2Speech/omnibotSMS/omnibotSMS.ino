@@ -102,10 +102,10 @@ void setup()
   while (!Serial);
 
   Serial.begin(115200);
-
+/*
   Serial.println(F("FONA basic test"));
   Serial.println(F("Initializing....(May take 3 seconds)"));
-
+*/
   fonaSerial->begin(4800);
   if (! fona.begin(*fonaSerial))
   {
@@ -114,24 +114,24 @@ void setup()
   }
   
   FONAtype = fona.type();
-  Serial.println(F("FONA is OK"));
-  Serial.print(F("Found "));
+//  Serial.println(F("FONA is OK"));
+//  Serial.print(F("Found "));
   switch (FONAtype)
   {
     case FONA800L:
-      Serial.println(F("FONA 800L")); break; // Markus' module
+//      Serial.println(F("FONA 800L")); break; // Markus' module
     case FONA800H:
-      Serial.println(F("FONA 800H")); break;
+//      Serial.println(F("FONA 800H")); break;
     case FONA808_V1:
-      Serial.println(F("FONA 808 (v1)")); break;
+//      Serial.println(F("FONA 808 (v1)")); break;
     case FONA808_V2:
-      Serial.println(F("FONA 808 (v2)")); break;
+//      Serial.println(F("FONA 808 (v2)")); break;
     case FONA3G_A:
-      Serial.println(F("FONA 3G (American)")); break;
+//      Serial.println(F("FONA 3G (American)")); break;
     case FONA3G_E:
-      Serial.println(F("FONA 3G (European)")); break;
+//      Serial.println(F("FONA 3G (European)")); break;
     default: 
-      Serial.println(F("???")); break;
+//      Serial.println(F("???")); break;
   }
   
   // Print module IMEI number.
@@ -139,27 +139,27 @@ void setup()
   uint8_t imeiLen = fona.getIMEI(imei);
   if (imeiLen > 0)
   {
-    Serial.print("Module IMEI: "); Serial.println(imei);
+//    Serial.print("Module IMEI: "); Serial.println(imei);
   }
 
 
   // read the battery voltage and percentage  
   if (! fona.getBattVoltage(&FONAvoltage))
   {
-    Serial.println(F("Failed to read Batt"));
+//    Serial.println(F("Failed to read Batt"));
   }
   else
   {
-    Serial.print(F("VBat = ")); Serial.print(FONAvoltage); Serial.println(F(" mV"));
+//    Serial.print(F("VBat = ")); Serial.print(FONAvoltage); Serial.println(F(" mV"));
   }
   
   if (! fona.getBattPercent(&FONAvoltage))
   {
-    Serial.println(F("Failed to read Batt"));
+//    Serial.println(F("Failed to read Batt"));
   }
   else
   {
-    Serial.print(F("VPct = ")); Serial.print(FONAvoltage); Serial.println(F("%"));
+//    Serial.print(F("VPct = ")); Serial.print(FONAvoltage); Serial.println(F("%"));
   }
 
 
@@ -169,17 +169,17 @@ void setup()
     // Unlock the SIM with PIN code
     char PIN[5] = { '5', '5', '5', '5', NULL};
 
-    Serial.print(F("Unlocking SIM card: "));
+//    Serial.print(F("Unlocking SIM card: "));
 
     if (! fona.unlockSIM(PIN))
     {
       SIMunlocked = false;
-      Serial.println(F("Failed"));
+//      Serial.println(F("Failed"));
     }
     else
     {
       SIMunlocked = true;
-      Serial.println(F("OK!"));
+//      Serial.println(F("OK!"));
     }
   }
 }
