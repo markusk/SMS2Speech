@@ -274,7 +274,7 @@ void loop()
     } // Serial.available
   } while (stringComplete == false);
 
-/ *
+/*
   // print the string when a newline arrives:
   if (stringComplete) 
   {
@@ -289,7 +289,7 @@ void loop()
 
     stringComplete = false;
   }
-* /
+*/
 
   // Wurde ein kompletter String empfangen und ist der Buffer ist leer?
   // delete flag
@@ -308,6 +308,8 @@ void loop()
     // write all data immediately!
     Serial.flush();
   }
+  
+/*
   else
   // GSM init (FONA) = "gsmi"
   if (command == "*gsmi#")
