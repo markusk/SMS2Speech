@@ -1,34 +1,50 @@
 // For Adafruit FONA
 #include <Adafruit_FONA.h>
 
-// For serial communication to the FONA module
+// disable debugging!
+#ifdef ADAFRUIT_FONA_DEBUG
+  #undef ADAFRUIT_FONA_DEBUG
+#endif
+
+// the Arduino Pins
+#define FONA_RX 2
+#define FONA_TX 10 // digital 10 for Mega, otherwise digital 3
+#define FONA_RST 4
+
+// this is a large buffer for replies
+char replybuffer[255];
+
+// We default to using software serial. If you want to use hardware serial
+// (because softserial isnt supported) comment out the following three lines 
+// and uncomment the HardwareSerial line
 #include <SoftwareSerial.h>
-
-// Adafruit FONA pins (GSM)  @todo: update pins to user a real HW serial port on Arduino/seeduino mega!! < < < <
-#define FONA_TX      16
-#define FONA_RX      17
-#define FONA_RST     18
-
-
-//------------------------------------------------------------
-// Adafruit FONA stuff
-//------------------------------------------------------------
-//const int buttonPin = A0; // Pushbutton
-int8_t smsnum = 0; // the number of available SMS's
-int returnValue = 0;
-// this is a large buffer for replies (SMS)
-char replybuffer[160]; // < < < < max 160 character length ! ! !!
-
 SoftwareSerial fonaSS = SoftwareSerial(FONA_TX, FONA_RX);
+SoftwareSerial *fonaSerial = &fonaSS;
+
+// Hardware serial is also possible!
+//  HardwareSerial *fonaSerial = &Serial1;
+
+// Use this for FONA 800 and 808s
 Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
+
+//uint8_t readline(char *buff, uint8_t maxbuff, uint16_t timeout = 0);
+
+
+// Markus
+uint8_t FONAtype;
+uint16_t FONAvoltage = 0;
+uint8_t FONAnetworkStatus = 0;
+bool SIMunlocked = false;
+int8_t FONAsmsnum = 0;
+int8_t FONAsmsInitialNum = 0;
+bool initialSMScounted = false;
 
 // store the state if FONA is okay or not (init okay etc.)
 boolean FONAstate = false;
-//------------------------------------------------------------
+
+int returnValue = 0;
 
 
-
-//-------  from main.h  -------------------------------
 
 //
 // the "serial" commands for the MC
