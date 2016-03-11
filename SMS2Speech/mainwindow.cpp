@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	mutex = new QMutex();
 	// Interface to Arduino
 	interface1 = new InterfaceAvr();
+	circuit1 = new Circuit(interface1, mutex);
 	speakThread = new SpeakThread();
 
 	// show messages in the GUI log or in the console
@@ -37,6 +38,7 @@ MainWindow::~MainWindow()
 	}
 
 	delete interface1;
+	delete circuit1;
 	delete speakThread;
 	delete ui;
 }
@@ -56,7 +58,15 @@ void MainWindow::on_pushButtonConnect_clicked()
 	}
 	else
 	{
+		//
+		// USB Port Okay
+		//
 		emit message("Serial port opened.");
+
+		// call Slot initArduino on Signal checkArduinoState
+		connect(this, SIGNAL(checkArduinoState()), circuit1, SLOT(initArduino()));
+
+		emit checkArduinoState();
 	}
 }
 

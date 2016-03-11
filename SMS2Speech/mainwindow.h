@@ -53,8 +53,15 @@ signals:
 	*/
 	void speak(QString text);
 
+	/**
+	 * @brief checkArduinoState
+	 */
+	void checkArduinoState();
+
+
 private:
 	Ui::MainWindow *ui;
+	Circuit *circuit1;
 	InterfaceAvr *interface1;
 	SpeakThread *speakThread;
 	QDateTime now; /// this is for the timestamp in the logs in the gui
