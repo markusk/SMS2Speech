@@ -78,6 +78,7 @@ bool Circuit::initCircuit()
 					circuitState = true;
 					emit robotState(true);
 
+					emit message("Arduino reset okay (*re#).");
 					return true;
 				}
 			}
