@@ -101,7 +101,7 @@ void setup()
   // initialize serial communication on the USB port
   while (!Serial);
 
-  Serial.begin(9600);
+  Serial.begin(115200);
 
   Serial.println(F("FONA basic test"));
   Serial.println(F("Initializing....(May take 3 seconds)"));
