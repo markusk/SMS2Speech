@@ -88,28 +88,100 @@ String command = "";
 
 void setup()
 {
- 
+
   //-------------------------------------------------------------------------------------------------
   // string command check stuff
   //-------------------------------------------------------------------------------------------------
-  // initialize serial communication on the USB port
-  Serial.begin(9600);
-
   // reserve 200 bytes for the inputString
   inputString.reserve(stringSize);
   command.reserve(stringSize);
   stringComplete = false;  // Flag, String komplett empfangen
   //-------------------------------------------------------------------------------------------------
+  
+  // initialize serial communication on the USB port
+  while (!Serial);
+
+  Serial.begin(9600);
+
+  Serial.println(F("FONA basic test"));
+  Serial.println(F("Initializing....(May take 3 seconds)"));
+
+  fonaSerial->begin(4800);
+  if (! fona.begin(*fonaSerial))
+  {
+    Serial.println(F("Couldn't find FONA"));
+    while (1);
+  }
+  
+  FONAtype = fona.type();
+  Serial.println(F("FONA is OK"));
+  Serial.print(F("Found "));
+  switch (FONAtype)
+  {
+    case FONA800L:
+      Serial.println(F("FONA 800L")); break; // Markus' module
+    case FONA800H:
+      Serial.println(F("FONA 800H")); break;
+    case FONA808_V1:
+      Serial.println(F("FONA 808 (v1)")); break;
+    case FONA808_V2:
+      Serial.println(F("FONA 808 (v2)")); break;
+    case FONA3G_A:
+      Serial.println(F("FONA 3G (American)")); break;
+    case FONA3G_E:
+      Serial.println(F("FONA 3G (European)")); break;
+    default: 
+      Serial.println(F("???")); break;
+  }
+  
+  // Print module IMEI number.
+  char imei[15] = {0}; // MUST use a 16 character buffer for IMEI!
+  uint8_t imeiLen = fona.getIMEI(imei);
+  if (imeiLen > 0)
+  {
+    Serial.print("Module IMEI: "); Serial.println(imei);
+  }
 
 
-  //-------------------------------------------------------------------------------------------------
-  // initialize some digital pins as an output.
-  //-------------------------------------------------------------------------------------------------
+  // read the battery voltage and percentage  
+  if (! fona.getBattVoltage(&FONAvoltage))
+  {
+    Serial.println(F("Failed to read Batt"));
+  }
+  else
+  {
+    Serial.print(F("VBat = ")); Serial.print(FONAvoltage); Serial.println(F(" mV"));
+  }
+  
+  if (! fona.getBattPercent(&FONAvoltage))
+  {
+    Serial.println(F("Failed to read Batt"));
+  }
+  else
+  {
+    Serial.print(F("VPct = ")); Serial.print(FONAvoltage); Serial.println(F("%"));
+  }
 
-//  pinMode(RGBLED5red, OUTPUT);
 
-  //-------------------------------------------------------------------------------------------------
+  // unlock SIM
+  if (SIMunlocked == false)
+  {
+    // Unlock the SIM with PIN code
+    char PIN[5] = { '5', '5', '5', '5', NULL};
 
+    Serial.print(F("Unlocking SIM card: "));
+
+    if (! fona.unlockSIM(PIN))
+    {
+      SIMunlocked = false;
+      Serial.println(F("Failed"));
+    }
+    else
+    {
+      SIMunlocked = true;
+      Serial.println(F("OK!"));
+    }
+  }
 }
 
 
@@ -117,7 +189,8 @@ void loop()
 {
   static uint8_t string_started = 0;  // Sind wir jetzt im String?
 
-
+delay(5000);
+/*
   do
   {
     // do we have something on the USB port?
@@ -203,7 +276,7 @@ void loop()
     } // Serial.available
   } while (stringComplete == false);
 
-/*
+/ *
   // print the string when a newline arrives:
   if (stringComplete) 
   {
@@ -218,7 +291,7 @@ void loop()
 
     stringComplete = false;
   }
-*/
+* /
 
   // Wurde ein kompletter String empfangen und ist der Buffer ist leer?
   // delete flag
@@ -434,11 +507,12 @@ void loop()
       Serial.flush();
     } // okay
   } // smsl
+*/
 
   // no valid command found (i.e. *wtf# )
   // delete command string
   command = "";
-
+  
 } // loop
 
 
