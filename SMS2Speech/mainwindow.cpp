@@ -15,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	// show messages in the GUI log or in the console
 	connect(this, SIGNAL( message(QString, bool, bool, bool) ), this, SLOT( appendLog(QString, bool, bool, bool) ));
+	connect(interface1, SIGNAL( message(QString,bool,bool,bool)), this, SLOT(appendLog(QString,bool,bool,bool)));
+	connect(circuit1, SIGNAL( message(QString,bool,bool,bool)), this, SLOT(appendLog(QString,bool,bool,bool)));
 
 	// speech
 	connect(this, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
@@ -66,6 +68,7 @@ void MainWindow::on_pushButtonConnect_clicked()
 		// call Slot initArduino on Signal checkArduinoState
 		connect(this, SIGNAL(checkArduinoState()), circuit1, SLOT(initArduino()));
 
+		emit message("Checking Arduino state...");
 		emit checkArduinoState();
 	}
 }
