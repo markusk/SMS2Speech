@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QDateTime>
 #include <QMutex>
+#include <QTimer>
 
 #include "circuit.h"
 #include "interfaceAvr.h"
