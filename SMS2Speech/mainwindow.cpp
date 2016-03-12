@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(this, SIGNAL( message(QString, bool, bool, bool) ), this, SLOT( appendLog(QString, bool, bool, bool) ));
 	connect(interface1, SIGNAL( message(QString,bool,bool,bool)), this, SLOT(appendLog(QString,bool,bool,bool)));
 	connect(circuit1, SIGNAL( message(QString)), this, SLOT(appendLog(QString)));
-	connect(gsmThread, SIGNAL(message(QString, bool, bool, bool)), gui, SLOT(appendLog(QString, bool, bool, bool)));
+	connect(gsmThread, SIGNAL(message(QString, bool, bool, bool)), this, SLOT(appendLog(QString, bool, bool, bool)));
 
 	// speech
 	connect(this, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));

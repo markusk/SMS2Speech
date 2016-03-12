@@ -258,6 +258,7 @@ bool GSMThread::init()
 	QString answer = "error";
 
 
+/*
 	// Initialise the GSM module
 	// "gsmi"
 	if (interface1->sendString("gsmi", className) == true)
@@ -266,9 +267,9 @@ bool GSMThread::init()
 		if (interface1->receiveString(answer, className) == true)
 		{
 			if (answer == "*gsmi#")
-			{
+			{ */
 				GSMState = ON;
-
+/*
 				// unlock PIN
 				if (unlockPIN() == true)
 				{
@@ -276,7 +277,7 @@ bool GSMThread::init()
 
 					// update GUI (show LED status from call before)
 					QCoreApplication::processEvents();
-
+*/
 					do
 					{
 						//-----------------
@@ -288,8 +289,8 @@ bool GSMThread::init()
 					} while (((networkState != GSM_Registered_Home) && (networkState != GSM_Registered_Roaming))); // wait for reception...   < < < < < < <  forever!!  Add timeout measurement!!!
 
 					// we have GSM!  :-)
-					emit GSMStatus(GREEN);
-
+//					emit GSMStatus(GREEN);
+/*
 					// Check very first SMS amount available
 					// could be the case, that there are already old SMS on the SIM
 					if (firstSMSCount)
@@ -303,9 +304,9 @@ bool GSMThread::init()
 							lastAmountSMS = availableSMS;
 
 							// emit message(QString("%1 SMS already on SIM.").arg(availableSMS));
-
+*/
 							return true;
-						}
+/*						}
 					}
 				}
 			}
@@ -318,6 +319,7 @@ bool GSMThread::init()
 	GSMState = OFF;
 
 	return false;
+*/
 }
 
 
