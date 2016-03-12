@@ -9,6 +9,7 @@
 #include "circuit.h"
 #include "interfaceAvr.h"
 #include "speakThread.h"
+#include "GSMThread.h"
 
 namespace Ui {
 class MainWindow;
@@ -65,6 +66,7 @@ private:
 	Circuit *circuit1;
 	InterfaceAvr *interface1;
 	SpeakThread *speakThread;
+	GSMThread *gsmThread;
 	QDateTime now; /// this is for the timestamp in the logs in the gui
 	QString serialPortMicrocontroller;
 	mutable QMutex *mutex; // make the threads thread-safe (e.g. senorThread, servo...)

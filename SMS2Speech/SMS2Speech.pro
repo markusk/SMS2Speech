@@ -16,6 +16,7 @@ SOURCES += main.cpp\
 			mainwindow.cpp \
 			circuit.cpp \
 			direcsSerial.cpp \
+			GSMThread.cpp \
 			interfaceAvr.cpp \
 			QtSpeech_mac.cpp \
 			speakThread.cpp
@@ -25,6 +26,7 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
 			circuit.h \
 			direcsSerial.h \
+			GSMThread.h \
 			interfaceAvr.h \
 			QtSpeech.h \
 			speakThread.h
