@@ -12,11 +12,13 @@ MainWindow::MainWindow(QWidget *parent) :
 	interface1 = new InterfaceAvr();
 	circuit1 = new Circuit(interface1, mutex);
 	speakThread = new SpeakThread();
+	gsmThread = new GSMThread(interface1, mutex);
 
 	// show messages in the GUI log or in the console
 	connect(this, SIGNAL( message(QString, bool, bool, bool) ), this, SLOT( appendLog(QString, bool, bool, bool) ));
 	connect(interface1, SIGNAL( message(QString,bool,bool,bool)), this, SLOT(appendLog(QString,bool,bool,bool)));
 	connect(circuit1, SIGNAL( message(QString)), this, SLOT(appendLog(QString)));
+	connect(gsmThread, SIGNAL(message(QString, bool, bool, bool)), gui, SLOT(appendLog(QString, bool, bool, bool)));
 
 	// speech
 	connect(this, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
@@ -27,12 +29,50 @@ MainWindow::MainWindow(QWidget *parent) :
 		speakThread->start();
 		emit message("Speak thread started.");
 	}
+
+	// start the GSM thread
+	if (gsmThread->isRunning() == false)
+	{
+		// whenever there is a material error, react!
+		//connect(gsmThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
+
+		// show GSM status in the GUI
+		//connect(gsmThread, SIGNAL(GSMStatus(unsigned char)), gui, SLOT(setLEDGSM(unsigned char)));
+
+		//----------------------
+		// init the GSM module
+		//----------------------
+		emit message("Initialising GSM module...", false);
+
+		if (gsmThread->init() == true)
+		{
+			emit message("GSM module initialised.");
+
+			// show SMS available in the GUI
+			//connect(gsmThread, SIGNAL(SMSavailable(int, QString)), gui, SLOT(showSMSavailable(int)));
+
+			// "new SMS" handling
+			//connect(gsmThread, SIGNAL(SMSavailable(int, QString)), this, SLOT(SMSTracking(int, QString)));
+
+			emit message("Starting GSM thread...");
+
+			// NOW start the run() method inside!
+			gsmThread->start();
+
+			emit message("GSM thread started.");
+		}
+	}
 }
 
 MainWindow::~MainWindow()
 {
 	emit message("Closing serial port.");
 	interface1->closeComPort();
+
+	if (gsmThread->isRunning())
+	{
+		gsmThread->stop();
+	}
 
 	if (speakThread->isRunning())
 	{
@@ -41,6 +81,7 @@ MainWindow::~MainWindow()
 
 	delete interface1;
 	delete circuit1;
+	delete gsmThread;
 	delete speakThread;
 	delete ui;
 }
