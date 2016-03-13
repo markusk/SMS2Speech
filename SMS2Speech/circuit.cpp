@@ -25,6 +25,8 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m)
 	// get the name of this class (this is for debugging messages)
 	className = this->staticMetaObject.className();
 
+	stopped = false;
+
 	// copy the pointer from the original object
 	interface1 = i;
 	mutex = m;
@@ -61,19 +63,20 @@ void Circuit::run()
 
 		if (circuitState == ON)
 		{
-			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-			mutex->lock();
-
-
-			/*
-			 * perform actions here
-			 */
-
-
-			// Unlock the mutex.
-			mutex->unlock();
-
-		} // robot is on
+			// first, we do an init, if not done before
+			if (firstInitDone == false)
+			{
+				emit message("Initialising Arduino...");
+				if (initArduino() == false)
+				{
+					// fail
+				}
+				else
+				{
+					// success. Next steps below...
+				}
+			}
+		} // circuit is on
 
 	}
 	stopped = false;

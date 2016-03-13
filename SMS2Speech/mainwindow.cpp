@@ -74,10 +74,17 @@ void MainWindow::on_pushButtonConnect_clicked()
 		emit message("Serial port opened.");
 
 		// call Slot initArduino on Signal checkArduinoState
-		connect(this, SIGNAL(checkArduinoState()), circuit1, SLOT(initArduino()));
+		// connect(this, SIGNAL(checkArduinoState()), circuit1, SLOT(initArduino()));
 
-		emit message("Checking Arduino state in 1 second...");
-		circuit1->initArduino();
+		emit message("Establishing connection to Arduino...");
+//		circuit1->initArduino();
+
+		if (circuit1->isRunning() == false)
+		{
+			emit message("Starting cicuit thread...");
+			circuit1->start();
+			emit message("Cicuit thread started.");
+		}
 /*
 		// start the GSM thread
 		if (gsmThread->isRunning() == false)

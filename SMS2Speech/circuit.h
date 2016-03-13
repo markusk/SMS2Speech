@@ -119,15 +119,11 @@ class Circuit : public QThread
 		QString commandInitCircuit;		///	*re#
 		QString commandSleep;			///	*sl#
 
-		static const unsigned char INIT = 64;
-		static const unsigned char INITANSWER = 64;
 		bool circuitState; // stores the robot state within this class
 		bool firstInitDone;
 
 		static const bool ON  = true;
 		static const bool OFF = false;
-
-		static const int atmelTimout = 500; // time in ms for waiting for an answer
 
 		/**
 		example answer string without value from Atmel: *re#
