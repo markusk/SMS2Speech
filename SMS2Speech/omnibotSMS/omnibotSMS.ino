@@ -214,6 +214,22 @@ void loop()
     Serial.print("#");
   }
 
+  // number of SMS
+  FONAsmsnum = fona.getNumSMS();
+  if (FONAsmsnum < 0)
+  {
+    Serial.print("*s");
+    Serial.print("err");
+    Serial.print("#");
+  }
+  else
+  {
+    Serial.print("*s");
+    Serial.print(FONAsmsnum);
+    Serial.print("#");
+  }
+
+
   delay(1000);
 
 /*

@@ -94,6 +94,16 @@ void Circuit::run()
 					interface1->convertStringToInt(atmelAnswer.remove('b'), value);
 					emit message(QString("GSM-Battery: %1%").arg(value));
 				}
+				else
+				{
+					// number of SMS
+					if (atmelAnswer.startsWith("*s"))
+					{
+						// convert to int
+						interface1->convertStringToInt(atmelAnswer.remove('s'), value);
+						emit message(QString("%1 SMS available.").arg(value));
+					}
+				}
 			}
 
 			mutex->unlock();
