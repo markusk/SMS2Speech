@@ -222,12 +222,12 @@ bool InterfaceAvr::receiveStringBlocking(QString &string, QString callingClassNa
 		{
 			// append received char to byte array
 			ba.append(character);
-			qDebug("character=%c", character);
+			// qDebug("character=%c", character);
 		}
 
 	} while ( ((result == 1) && (character != '#')) || (result == 2) );
 
-	if ((result != 1) || (result != 2))
+	if ((result != 1) && (result != 2))
 	{
 		// ERROR (error message already emitted from readAtmelPort!)
 		qDebug() << "error at receiveString called from" << callingClassName;

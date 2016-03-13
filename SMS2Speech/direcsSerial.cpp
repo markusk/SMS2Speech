@@ -266,8 +266,9 @@ int DirecsSerial::readData(unsigned char *buf, int nChars, QString callingClassN
 			else
 			{
 				// timeout
-				emit message(QString("<font color=\"#FF0000\">ERROR No data available within %1 µs when using select() on serial device at DirecsSerial::readData called from %2.</font>").arg(READ_TIMEOUT_ATMEL).arg(callingClassName));
-				emit message(QString("<font color=\"#FF0000\">ERROR %1: %2.</font>").arg(errno).arg(strerror(errno)));
+//				emit message(QString("<font color=\"#FF0000\">ERROR No data available within %1 µs when using select() on serial device at DirecsSerial::readData called from %2.</font>").arg(READ_TIMEOUT_ATMEL).arg(callingClassName));
+//				emit message(QString("<font color=\"#FF0000\">ERROR %1: %2.</font>").arg(errno).arg(strerror(errno)));
+				emit message("(ignored timeout, Arduino needs some time)");
 
 				return errno;
 			}
