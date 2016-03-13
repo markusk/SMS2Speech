@@ -64,7 +64,7 @@ bool Circuit::initCircuit()
 		do
 		{
 			// is Arduino sending "*cstart#"?
-			if (interface1->receiveString(answer, className) == true)
+			if (interface1->receiveStringBlocking(answer, className) == true)
 			{
 				// check string
 				if (answer == "*cstart#")

@@ -206,6 +206,48 @@ bool InterfaceAvr::receiveString(QString &string, QString callingClassName)
 }
 
 
+bool InterfaceAvr::receiveStringBlocking(QString &string, QString callingClassName)
+{
+	int result = 0;
+	unsigned char character;
+	QByteArray ba;
+
+
+	do
+	{
+		// reading one char. Must return 1 (one character succussfull read).
+		result = serialPort->readData(&character, 1, callingClassName);
+
+		if (result == 1)
+		{
+			// append received char to byte array
+			ba.append(character);
+			qDebug("character=%c", character);
+		}
+
+	} while ( ((result == 1) && (character != '#')) || (result == 2) );
+
+	if ((result != 1) || (result != 2))
+	{
+		// ERROR (error message already emitted from readAtmelPort!)
+		qDebug() << "error at receiveString called from" << callingClassName;
+		return false;
+	}
+
+	// copy chars to QString to pointer to return the QString
+	string = QString::fromUtf8(ba.data(), ba.length());
+
+	// check result!
+	if ((string.startsWith(starter)) && (string.endsWith(terminator)))
+	{
+		return true;
+	}
+
+
+	return false;
+}
+
+
 bool InterfaceAvr::receiveInt(int *value, QString callingClassName)
 {
 	// no longer supported since Arduino!!
