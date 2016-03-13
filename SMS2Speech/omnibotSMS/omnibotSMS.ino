@@ -157,15 +157,6 @@ void setup()
   {
 //    Serial.print(F("VBat = ")); Serial.print(FONAvoltage); Serial.println(F(" mV"));
   }
-  
-  if (! fona.getBattPercent(&FONAvoltage))
-  {
-//    Serial.println(F("Failed to read Batt"));
-  }
-  else
-  {
-//    Serial.print(F("VPct = ")); Serial.print(FONAvoltage); Serial.println(F("%"));
-  }
 */
 
   // unlock SIM
@@ -209,9 +200,21 @@ void setup()
 
 void loop()
 {
-  Serial.print("loop() reached.");
+  // battery status
+  if (! fona.getBattPercent(&FONAvoltage))
+  {
+    Serial.print("*b");
+    Serial.print("err");
+    Serial.print("#");
+  }
+  else
+  {
+    Serial.print("*b");
+    Serial.print(FONAvoltage);
+    Serial.print("#");
+  }
 
-  delay(5000);
+  delay(1000);
 
 /*
 / *
