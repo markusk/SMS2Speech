@@ -85,14 +85,14 @@ void Circuit::run()
 			// check next info from Arduino
 			if (interface1->receiveString(atmelAnswer, className) == true)
 			{
-				emit message(atmelAnswer);
+				// emit message(atmelAnswer);
 
 				// battery status
 				if (atmelAnswer.startsWith("*b"))
 				{
 					// convert to int
-					interface1->convertStringToInt(atmelAnswer, value);
-					emit message(QString("Battery = %1").arg(value));
+					interface1->convertStringToInt(atmelAnswer.remove('b'), value);
+					emit message(QString("GSM-Battery: %1%").arg(value));
 				}
 			}
 
