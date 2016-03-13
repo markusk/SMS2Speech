@@ -31,13 +31,11 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m)
 
 	circuitState = ON; // We think positive
 	firstInitDone = false;
-	compassCircuitState = false;
 
 	expectedAtmelAnswer = "error";
 
 	// theAtmelcommands
 	commandInitCircuit	= "re";
-	commandInitCompass	= "cc";
 	commandSleep		= "sl";
 }
 
@@ -158,47 +156,6 @@ bool Circuit::initArduino()
 }
 
 
-bool Circuit::initCompass()
-{
-	QString answer = "error";
-
-
-	if (circuitState) // maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
-	{
-		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
-		mutex->lock();
-
-		// check if the 3D compass sensor is connected to the Atmel board
-		if (interface1->sendString("cc", className) == true)
-		{
-			// check if the robot answers with "ok"
-			if ( interface1->receiveString(answer, className) == true)
-			{
-				if (answer == "*ok#")
-				{
-					// Unlock the mutex
-					mutex->unlock();
-
-					compassCircuitState = true;
-					emit compassState(true);
-
-					return true;
-				}
-			}
-		}
-
-		// Unlock the mutex.
-		mutex->unlock();
-
-	}
-
-	compassCircuitState = false;
-	emit compassState(false);
-
-	return false;
-}
-
-
 bool Circuit::isConnected()
 {
 	// if not tried to init hardware, do this!
@@ -209,19 +166,6 @@ bool Circuit::isConnected()
 	}
 
 	return circuitState;
-}
-
-
-bool Circuit::compassConnected()
-{
-	// if not tried to init the robots (and compass) hardware, do this!
-	if (firstInitDone == false)
-	{
-		initCircuit();
-		firstInitDone = true;
-	}
-
-	return compassCircuitState;
 }
 
 

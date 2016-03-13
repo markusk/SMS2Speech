@@ -56,11 +56,6 @@ class Circuit : public QThread
 		*/
 		bool isConnected();
 
-		/**
-		@return The state of the compass module which is connected to the robots circuit (Atmel board).
-		*/
-		bool compassConnected();
-
 
 	public slots:
 		/**
@@ -82,12 +77,6 @@ class Circuit : public QThread
 		bool sleep();
 
 		/**
-		Initialises the robot's 3D compass. Actually it checks, if the module is connected or not.
-		@return true, when connected.
-		*/
-		bool initCompass();
-
-		/**
 		This slots takes the robot (circuit) state, to know if the robot is ON or OFF.
 		When the class knows this, unnecessary communication with the interface can be avoided.
 
@@ -102,13 +91,6 @@ class Circuit : public QThread
 		@param state can be true or false
 		*/
 		void robotState(bool state);
-
-		/**
-		This signal emits the 3D compass module state; it checks if the module is connected to the Atmel board.
-		Not in use, at the moment...
-		@param state can be true or false
-		*/
-		void compassState(bool state);
 
 		/**
 		Sends a string to the GUI log.
@@ -135,14 +117,12 @@ class Circuit : public QThread
 		QString expectedAtmelAnswer;
 
 		QString commandInitCircuit;		///	*re#
-		QString commandInitCompass;		///	*cc#
 		QString commandSleep;			///	*sl#
 
 		static const unsigned char INIT = 64;
 		static const unsigned char INITANSWER = 64;
 		bool circuitState; // stores the robot state within this class
 		bool firstInitDone;
-		bool compassCircuitState; // stores the state of the compass module within this class
 
 		static const bool ON  = true;
 		static const bool OFF = false;
