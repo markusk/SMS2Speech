@@ -3,3 +3,4 @@ ui_*.h
 moc_*.cpp
 build-SMS2Speech-Desktop-Debug
 build-SMS2Speech-Desktop-Release
+SMS2Speech.pro.user
