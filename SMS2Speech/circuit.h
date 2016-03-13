@@ -22,8 +22,9 @@
 #define CIRCUIT_H
 
 //-------------------------------------------------------------------
-#include "interfaceAvr.h"
+#include <QThread>
 #include <QMutex>
+#include "interfaceAvr.h"
 //-------------------------------------------------------------------
 
 /**
@@ -32,13 +33,23 @@
 
 This class delivers a initialisation for the robot's circuits and checks, if the robot is ON or OFF.
 */
-class Circuit : public QObject
+class Circuit : public QThread
 {
 	Q_OBJECT
 
 	public:
 		Circuit(InterfaceAvr *i, QMutex *m);
 		~Circuit();
+
+		/**
+		Stops the thread.
+		*/
+		void stop();
+
+		/**
+		Starts the thread.
+		*/
+		virtual void run();
 
 		/**
 		@return The state of the robot (true when connected (and aswers), false when not).
@@ -110,6 +121,13 @@ class Circuit : public QObject
 		QString className;	/// this will contain the name of _this_ class at runtime for debug messages
 
 		mutable QMutex *mutex; // make this class thread-safe
+
+		// Every thread sleeps some time, for having a bit more time fo the other threads!
+		// Time in milliseconds
+		static const unsigned long THREADSLEEPTIME = 1000; // Default: 100 ms?!?
+
+		volatile bool stopped;
+
 		InterfaceAvr *interface1;
 
 		QString atmelCommand;

@@ -29,7 +29,7 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m)
 	interface1 = i;
 	mutex = m;
 
-	circuitState = true; // We think positive
+	circuitState = ON; // We think positive
 	firstInitDone = false;
 	compassCircuitState = false;
 
@@ -44,6 +44,41 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m)
 
 Circuit::~Circuit()
 {
+}
+
+
+void Circuit::stop()
+{
+	stopped = true;
+}
+
+
+void Circuit::run()
+{
+	//  start "threading"...
+	while (!stopped)
+	{
+		// let the thread sleep some time for having more time for the other threads
+		msleep(THREADSLEEPTIME);
+
+		if (circuitState == ON)
+		{
+			// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
+			mutex->lock();
+
+
+			/*
+			 * perform actions here
+			 */
+
+
+			// Unlock the mutex.
+			mutex->unlock();
+
+		} // robot is on
+
+	}
+	stopped = false;
 }
 
 
