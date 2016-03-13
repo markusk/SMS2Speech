@@ -55,6 +55,9 @@ void Circuit::stop()
 
 void Circuit::run()
 {
+	int value = 0;
+
+
 	//  start "threading"...
 	while (!stopped)
 	{
@@ -76,6 +79,25 @@ void Circuit::run()
 					// success. Next steps below...
 				}
 			}
+
+			mutex->lock();
+
+			// check next info from Arduino
+			if (interface1->receiveString(atmelAnswer, className) == true)
+			{
+				emit message(atmelAnswer);
+
+				// battery status
+				if (atmelAnswer.startsWith("*b"))
+				{
+					// convert to int
+					interface1->convertStringToInt(atmelAnswer, value);
+					emit message(QString("Battery = %1").arg(value));
+				}
+			}
+
+			mutex->unlock();
+
 		} // circuit is on
 
 	}
@@ -85,7 +107,7 @@ void Circuit::run()
 
 bool Circuit::initCircuit()
 {
-	QString answer = "error";
+	atmelAnswer = "error";
 
 
 	if (circuitState) // maybe robot is already recognized as OFF by the interface class (e.g. path to serial port not found)!
@@ -100,10 +122,10 @@ bool Circuit::initCircuit()
 		do
 		{
 			// is Arduino sending "*cstart#"?
-			if (interface1->receiveStringBlocking(answer, className) == true)
+			if (interface1->receiveStringBlocking(atmelAnswer, className) == true)
 			{
 				// check string
-				if (answer == "*cstart#")
+				if (atmelAnswer == "*cstart#")
 				{
 					// answer with same command to Arduino
 					if (interface1->sendString(commandInitCircuit, className) == true)
@@ -122,7 +144,7 @@ bool Circuit::initCircuit()
 				}
 				else
 				{
-					emit message("ERROR: Arduino did not sent '*cstart#'.");
+					emit message(QString("ERROR: Arduino did not send \"*%1#\".").arg(commandInitCircuit));
 
 					firstInitDone = true;
 					circuitState = false;
