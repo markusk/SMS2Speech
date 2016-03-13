@@ -37,7 +37,7 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m)
 	expectedAtmelAnswer = "error";
 
 	// theAtmelcommands
-	commandInitCircuit	= "re";
+	commandInitCircuit	= "cstart";
 	commandSleep		= "sl";
 }
 
@@ -106,7 +106,7 @@ bool Circuit::initCircuit()
 				if (answer == "*cstart#")
 				{
 					// answer with same command to Arduino
-					if (interface1->sendString("cstart", className) == true)
+					if (interface1->sendString(commandInitCircuit, className) == true)
 					{
 						// Unlock the mutex
 						mutex->unlock();
@@ -116,9 +116,8 @@ bool Circuit::initCircuit()
 						circuitState = true;
 						emit robotState(true);
 
-						emit message("Arduino communication okay (*cstart#).");
+						emit message(QString("Arduino communication okay (*%1#).").arg(commandInitCircuit));
 						return true;
-
 					}
 				}
 				else

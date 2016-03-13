@@ -230,7 +230,7 @@ bool InterfaceAvr::receiveStringBlocking(QString &string, QString callingClassNa
 	if ((result != 1) && (result != 2))
 	{
 		// ERROR (error message already emitted from readAtmelPort!)
-		qDebug() << "error at receiveString called from" << callingClassName;
+// ERROR 316, but works?!?		qDebug() << "error" << result << "(" << strerror(errno) <<") at receiveString called from" << callingClassName;
 		return false;
 	}
 
