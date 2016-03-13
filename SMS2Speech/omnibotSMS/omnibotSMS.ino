@@ -134,7 +134,11 @@ void setup()
 //      Serial.println(F("???")); break;
         break;
   }
-  
+
+  /*
+   * DISABLED
+   * 
+ 
   // Print module IMEI number.
   char imei[15] = {0}; // MUST use a 16 character buffer for IMEI!
   uint8_t imeiLen = fona.getIMEI(imei);
@@ -162,7 +166,7 @@ void setup()
   {
 //    Serial.print(F("VPct = ")); Serial.print(FONAvoltage); Serial.println(F("%"));
   }
-
+*/
 
   // unlock SIM
   if (SIMunlocked == false)
@@ -183,6 +187,11 @@ void setup()
 //      Serial.println(F("OK!"));
     }
   }
+
+  do
+  {
+    Serial.print("*cstart#");
+  } while(1);
 }
 
 
@@ -190,6 +199,9 @@ void loop()
 {
   static uint8_t string_started = 0;  // Sind wir jetzt im String?
 
+delay(5000);
+
+/*
 
   do
   {
@@ -274,7 +286,7 @@ void loop()
     } // Serial.available
   } while (stringComplete == false);
 
-/*
+/ *
   // print the string when a newline arrives:
   if (stringComplete) 
   {
@@ -289,7 +301,7 @@ void loop()
 
     stringComplete = false;
   }
-*/
+* /
 
   // Wurde ein kompletter String empfangen und ist der Buffer ist leer?
   // delete flag
@@ -308,211 +320,8 @@ void loop()
     // write all data immediately!
     Serial.flush();
   }
-  else
-  // GSM init (FONA) = "gsmi"
-  if (command == "*gsmi#")
-  {
-    // FONA init in setup() okay?    
-    if (FONAstate == false)
-    {
-      // answer "error"
-      if (Serial.print("*err#") < 5)
-      {
-        // ERROR!!
-        delay(10000);
-        return;
-      }
-      // write all data immediately!
-      Serial.flush();
-    }
-    else
-    {
-      // answer "ok"
-      if (Serial.print("*gsmi#") < 6)
-      {
-        // ERROR!!
-        delay(10000);
-        return;
-      }
-      // write all data immediately!
-      Serial.flush();
-    }
-  } // gsmi
-  
-/*
-  else
-  // GSM PIN unlock (FONA) =  "gsmp"
-  if (command == "*gsmp#")
-  {
-    if (unlockSIM() == -1)
-    {
-      // ERROR
 
-      // store state
-      FONAstate = false;
-
-      // all LEDs red
-      allLEDsRed();
-
-      // answer "ok"
-      if (Serial.print("*err#") < 5)
-      {
-        // ERROR!!
-        delay(10000);
-        return;
-      }
-      // write all data immediately!
-      Serial.flush();
-    }
-    else
-    {
-      // OKAY
-
-      // store state
-      FONAstate = true;      
-
-      // answer "ok"
-      if (Serial.print("*gsmp#") < 6)
-      {
-        // ERROR!!
-        delay(10000);
-        return;
-      }
-      // write all data immediately!
-      Serial.flush();
-    } // PIN okay
-  } // gsmp
-  // (get) GSM status (FONA) = "gsms"
-  if (command == "*gsms#")
-  {
-    // read the network/cellular status
-    uint8_t networkStatus = fona.getNetworkStatus();
-
-    if (Serial.print("*") < 1)
-    {
-      // ERROR!!
-      delay(10000);
-      return;
-    }
-    // write all data immediately!
-    Serial.flush();
-
-    // print network status
-    if (Serial.print( networkStatus ) < 1)
-    {
-      // ERROR!!
-      delay(10000);
-      return;
-    }
-    // write all data immediately!
-    Serial.flush();
-
-    if (Serial.print("#") < 1)
-    {
-      // ERROR!!
-      delay(10000);
-      return;
-    }
-    // write all data immediately!
-    Serial.flush();
-  } // gsms
-  else
-  // SMS_COUNT / SMS_CHECK = "smsc"
-  if (command == "*smsc#")
-  {
-    // read and store(!) the number of SMS's
-    smsnum = fona.getNumSMS();
-
-    // success ?
-    if (smsnum < 0)
-    {
-      // answer with "ERROR"
-      Serial.print("*err#");
-      Serial.flush();
-    }
-    else
-    {
-      if (Serial.print("*") < 1)
-      {
-        // ERROR!!
-        delay(10000);
-        return;
-      }
-      // write all data immediately!
-      Serial.flush();
-
-      // print no of SMS
-      if (Serial.print( smsnum ) < 1)
-      {
-        // ERROR!!
-        delay(10000);
-        return;
-      }
-      // write all data immediately!
-      Serial.flush();
-
-      if (Serial.print("#") < 1)
-      {
-        // ERROR!!
-        delay(10000);
-        return;
-      }
-      // write all data immediately!
-      Serial.flush();
-    } // okay
-  } // smsc
-  else
-  // read Last SMS = "smsl"
-  if (command == "*smsl#")
-  {
-    // Retrieve content of SMS No. "smsnum"
-    uint16_t smslength;
-
-    // pass in buffer and max len (255)!
-    if (! fona.readSMS(smsnum, replybuffer, 250, &smslength))
-    {
-      // answer with "ERROR"
-      Serial.print("*err#");
-      Serial.flush();
-    }
-    else
-    {
-      // success
-      if (Serial.print("*") < 1)
-      {
-        // ERROR!!
-        delay(10000);
-        return;
-      }
-      // write all data immediately!
-      Serial.flush();
-
-      // print SMS content
-      if (Serial.print( replybuffer ) < 1)
-      {
-        // ERROR!!
-        delay(10000);
-        return;
-      }
-      // write all data immediately!
-      Serial.flush();
-
-      if (Serial.print("#") < 1)
-      {
-        // ERROR!!
-        delay(10000);
-        return;
-      }
-      // write all data immediately!
-      Serial.flush();
-    } // okay
-  } // smsl
 */
-
-  // no valid command found (i.e. *wtf# )
-  // delete command string
-  command = "";
-  
 } // loop
 
 

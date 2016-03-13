@@ -57,39 +57,52 @@ bool Circuit::initCircuit()
 		// Lock the mutex. If another thread has locked the mutex then this call will block until that thread has unlocked it.
 		mutex->lock();
 
-		//-------------------------------------------------------
-		// Basic init for all the bits on the robot circuit
-		//-------------------------------------------------------
 
 		// sending RESET (INIT) command
-		if (interface1->sendString("re", className) == true)
+		// check if Arduino sends the inital command that it is "ready"
+
+		do
 		{
-			// check if the robot answers
-			if ( interface1->receiveString(answer, className) == true)
+			// is Arduino sending "*cstart#"?
+			if (interface1->receiveString(answer, className) == true)
 			{
-				// check if the robot answers with "ok"
-				if (answer == "*re#")
+				// check string
+				if (answer == "*cstart#")
 				{
-					// Unlock the mutex
-					mutex->unlock();
+					// answer with same command to Arduino
+					if (interface1->sendString("cstart", className) == true)
+					{
+						// Unlock the mutex
+						mutex->unlock();
 
-					// ciruit init okay
+						// ciruit init okay
+						firstInitDone = true;
+						circuitState = true;
+						emit robotState(true);
+
+						emit message("Arduino communication okay (*cstart#).");
+						return true;
+
+					}
+				}
+				else
+				{
+					emit message("ERROR: Arduino did not sent '*cstart#'.");
+
 					firstInitDone = true;
-					circuitState = true;
-					emit robotState(true);
+					circuitState = false;
+					emit robotState(false);
 
-					emit message("Arduino reset okay (*re#).");
-					return true;
+					return false;
 				}
 			}
-		}
+		} while (1); // endlessly!
 
 		// Unlock the mutex.
 		mutex->unlock();
 
 	}
 
-	qDebug("INFO from initCircuit: Robot is OFF.");
 	firstInitDone = true;
 	circuitState = false;
 	emit robotState(false);

@@ -76,9 +76,9 @@ void MainWindow::on_pushButtonConnect_clicked()
 		// call Slot initArduino on Signal checkArduinoState
 		connect(this, SIGNAL(checkArduinoState()), circuit1, SLOT(initArduino()));
 
-		emit message("Checking Arduino state in 10 seconds...");
-		QTimer::singleShot(10000, circuit1, SLOT(initArduino()));
-
+		emit message("Checking Arduino state in 1 second...");
+		circuit1->initArduino();
+/*
 		// start the GSM thread
 		if (gsmThread->isRunning() == false)
 		{
@@ -111,6 +111,7 @@ void MainWindow::on_pushButtonConnect_clicked()
 				emit message("GSM thread started.");
 			}
 		}
+*/
 	}
 }
 
