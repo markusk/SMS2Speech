@@ -47,7 +47,7 @@ int returnValue = 0;
 
 
 //
-// the "serial" commands for the MC
+// the "serial" answers for the MC
 //
 
 /* Commands for interaction with the GSM FONA module
@@ -72,7 +72,7 @@ int returnValue = 0;
 
 
 //-------------------------------------------------------------------------------------------------
-// string command check stuff
+// string answer check stuff
 //-------------------------------------------------------------------------------------------------
 int starter    = 42; // this marks the beginning of a received string. which is '*' at the moment.
 int terminator = 35; // this marks the end of a string. which is '#' at the moment.
@@ -82,7 +82,7 @@ int terminator = 35; // this marks the end of a string. which is '#' at the mome
 
 String inputString = "";         // a string to hold incoming data
 boolean stringComplete = false;  // whether the string is complete
-String command = "";
+String answer = "";
 //-------------------------------------------------------------------------------------------------
 
 
@@ -90,11 +90,11 @@ void setup()
 {
 
   //-------------------------------------------------------------------------------------------------
-  // string command check stuff
+  // string answer check stuff
   //-------------------------------------------------------------------------------------------------
   // reserve 200 bytes for the inputString
   inputString.reserve(stringSize);
-  command.reserve(stringSize);
+  answer.reserve(stringSize);
   stringComplete = false;  // Flag, String komplett empfangen
   //-------------------------------------------------------------------------------------------------
   
@@ -197,13 +197,13 @@ void setup()
     Serial.print("*cstart#");
     delay(1000);
 
-    // check for answer on USB port
+    // wait for answer on USB port
     waitForAnswer();
 
-    Serial.print("command=");
-    Serial.println(command);
+//    Serial.print("answer=");
+//    Serial.println(answer);
     
-  } while(command != "*cstart#");
+  } while(answer != "*cstart#");
 }
 
 
@@ -220,7 +220,7 @@ void loop()
   //--------------------------
 
   // RESET / INIT
-  if (command == "*re#")
+  if (answer == "*re#")
   {
     // answer with "ok"
     // this answer is used to see if the robot is "on"
@@ -330,8 +330,8 @@ void waitForAnswer()
               // ja, dann terminator anhängen
               inputString += inChar;
 
-              // copy input string to command string (used in loop)
-              command = inputString;
+              // copy input string to answer string (used in loop)
+              answer = inputString;
 
               // clear input striing
               inputString = "";
