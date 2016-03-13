@@ -188,21 +188,99 @@ void setup()
     }
   }
 
+
+  //------------------------------------------------------
+  // send START COMM via USB, until a computer answers
+  //------------------------------------------------------
   do
   {
     Serial.print("*cstart#");
-  } while(1);
+    delay(1000);
+
+    // check for answer on USB port
+    waitForAnswer();
+
+    Serial.print("command=");
+    Serial.println(command);
+    
+  } while(command != "*cstart#");
 }
 
 
 void loop()
 {
-  static uint8_t string_started = 0;  // Sind wir jetzt im String?
+  Serial.print("loop() reached.");
 
-delay(5000);
+  delay(5000);
 
 /*
+/ *
+  //--------------------------
+  // check what was received
+  //--------------------------
 
+  // RESET / INIT
+  if (command == "*re#")
+  {
+    // answer with "ok"
+    // this answer is used to see if the robot is "on"
+    Serial.print("*re#");
+    // write all data immediately!
+    Serial.flush();
+  }
+
+*/
+} // loop
+
+
+// FONA: read the number of SMS's
+int8_t readNumSMS()
+{
+  int8_t smsnum = fona.getNumSMS();
+
+
+  if (smsnum < 0)
+  {
+    return -1;
+  }
+
+  return smsnum; 
+}
+
+
+// FONA: Unlock the SIM with a PIN code
+int unlockSIM()
+{
+  char PIN[5];
+
+
+  // PIN
+  PIN[0] = '5';
+  PIN[1] = '5';
+  PIN[2] = '5';
+  PIN[3] = '5';
+  PIN[4] = NULL;
+
+  // unlock
+  if (! fona.unlockSIM(PIN))
+  {
+    // error
+    return -1;
+  } 
+  else
+  {
+    // ok
+    return 0;
+  }        
+}
+
+
+// waits for an answer from computer. Has start with * and end with #.
+void waitForAnswer()
+{
+  static uint8_t string_started = 0;  // Sind wir jetzt im String?
+
+  
   do
   {
     // do we have something on the USB port?
@@ -286,8 +364,9 @@ delay(5000);
     } // Serial.available
   } while (stringComplete == false);
 
-/ *
-  // print the string when a newline arrives:
+
+/*
+    // print the string when a newline arrives:
   if (stringComplete) 
   {
     Serial.print("stringComplete (loop):"); 
@@ -301,67 +380,9 @@ delay(5000);
 
     stringComplete = false;
   }
-* /
+*/
 
   // Wurde ein kompletter String empfangen und ist der Buffer ist leer?
   // delete flag
   stringComplete = false;
-
-  //--------------------------
-  // check what was received
-  //--------------------------
-
-  // RESET / INIT
-  if (command == "*re#")
-  {
-    // answer with "ok"
-    // this answer is used to see if the robot is "on"
-    Serial.print("*re#");
-    // write all data immediately!
-    Serial.flush();
-  }
-
-*/
-} // loop
-
-
-// FONA: read the number of SMS's
-int8_t readNumSMS()
-{
-  int8_t smsnum = fona.getNumSMS();
-
-
-  if (smsnum < 0)
-  {
-    return -1;
-  }
-
-  return smsnum; 
-}
-
-
-// FONA: Unlock the SIM with a PIN code
-int unlockSIM()
-{
-  char PIN[5];
-
-
-  // PIN
-  PIN[0] = '5';
-  PIN[1] = '5';
-  PIN[2] = '5';
-  PIN[3] = '5';
-  PIN[4] = NULL;
-
-  // unlock
-  if (! fona.unlockSIM(PIN))
-  {
-    // error
-    return -1;
-  } 
-  else
-  {
-    // ok
-    return 0;
-  }        
 }
