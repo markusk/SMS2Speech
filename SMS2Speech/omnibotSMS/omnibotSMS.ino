@@ -308,8 +308,6 @@ void loop()
     // write all data immediately!
     Serial.flush();
   }
-  
-/*
   else
   // GSM init (FONA) = "gsmi"
   if (command == "*gsmi#")
@@ -340,6 +338,8 @@ void loop()
       Serial.flush();
     }
   } // gsmi
+  
+/*
   else
   // GSM PIN unlock (FONA) =  "gsmp"
   if (command == "*gsmp#")

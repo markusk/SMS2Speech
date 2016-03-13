@@ -29,39 +29,6 @@ MainWindow::MainWindow(QWidget *parent) :
 		speakThread->start();
 		emit message("Speak thread started.");
 	}
-
-	// start the GSM thread
-	if (gsmThread->isRunning() == false)
-	{
-		// whenever there is a material error, react!
-		//connect(gsmThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
-
-		// show GSM status in the GUI
-		//connect(gsmThread, SIGNAL(GSMStatus(unsigned char)), gui, SLOT(setLEDGSM(unsigned char)));
-
-		//----------------------
-		// init the GSM module
-		//----------------------
-		emit message("Initialising GSM module...", false);
-
-		if (gsmThread->init() == true)
-		{
-			emit message("GSM module initialised.");
-
-			// show SMS available in the GUI
-			//connect(gsmThread, SIGNAL(SMSavailable(int, QString)), gui, SLOT(showSMSavailable(int)));
-
-			// "new SMS" handling
-			//connect(gsmThread, SIGNAL(SMSavailable(int, QString)), this, SLOT(SMSTracking(int, QString)));
-
-			emit message("Starting GSM thread...");
-
-			// NOW start the run() method inside!
-			gsmThread->start();
-
-			emit message("GSM thread started.");
-		}
-	}
 }
 
 MainWindow::~MainWindow()
@@ -111,6 +78,39 @@ void MainWindow::on_pushButtonConnect_clicked()
 
 		emit message("Checking Arduino state in 10 seconds...");
 		QTimer::singleShot(10000, circuit1, SLOT(initArduino()));
+
+		// start the GSM thread
+		if (gsmThread->isRunning() == false)
+		{
+			// whenever there is a material error, react!
+			//connect(gsmThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
+
+			// show GSM status in the GUI
+			//connect(gsmThread, SIGNAL(GSMStatus(unsigned char)), gui, SLOT(setLEDGSM(unsigned char)));
+
+			//----------------------
+			// init the GSM module
+			//----------------------
+			emit message("Initialising GSM module...", false);
+
+			if (gsmThread->init() == true)
+			{
+				emit message("GSM module initialised.");
+
+				// show SMS available in the GUI
+				//connect(gsmThread, SIGNAL(SMSavailable(int, QString)), gui, SLOT(showSMSavailable(int)));
+
+				// "new SMS" handling
+				//connect(gsmThread, SIGNAL(SMSavailable(int, QString)), this, SLOT(SMSTracking(int, QString)));
+
+				emit message("Starting GSM thread...");
+
+				// NOW start the run() method inside!
+				gsmThread->start();
+
+				emit message("GSM thread started.");
+			}
+		}
 	}
 }
 
