@@ -244,6 +244,11 @@ void loop()
     Serial.print("#");
   }
 
+  // network/cellular status  *n___#
+  FONAnetworkStatus = fona.getNetworkStatus()
+  Serial.print("*n");
+  Serial.print(FONAnetworkStatus);
+  Serial.print("#");
 
 
   delay(1000);
