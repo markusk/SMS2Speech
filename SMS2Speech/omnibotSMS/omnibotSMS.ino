@@ -1,18 +1,16 @@
 // For Adafruit FONA
 #include <Adafruit_FONA.h>
 
-// disable debugging!
+// Disable FONA debugging!
 #ifdef ADAFRUIT_FONA_DEBUG
   #undef ADAFRUIT_FONA_DEBUG
 #endif
 
-// the Arduino Pins
+// Arduino Pins
 #define FONA_RX 2
 #define FONA_TX 10 // digital 10 for Mega, otherwise digital 3
 #define FONA_RST 4
 
-// this is a large buffer for replies
-char replybuffer[255];
 
 // We default to using software serial. If you want to use hardware serial
 // (because softserial isnt supported) comment out the following three lines 
@@ -27,10 +25,8 @@ SoftwareSerial *fonaSerial = &fonaSS;
 // Use this for FONA 800 and 808s
 Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
 
-//uint8_t readline(char *buff, uint8_t maxbuff, uint16_t timeout = 0);
 
-
-// Markus
+// several FONA data whcih will be stored (for a possible later use)
 uint8_t FONAtype;
 uint16_t FONAvoltage = 0;
 uint8_t FONAnetworkStatus = 0;
@@ -45,23 +41,6 @@ boolean FONAstate = false;
 
 int returnValue = 0;
 
-
-
-//
-// the "serial" answers for the MC
-//
-
-/* Commands for interaction with the GSM FONA module
-  gsmi  = init GSM module
-  gsmp  = unlock GSM module with PIN
-  gsms  = (get) GSM status
-
-  smsc  = count available SMS
-  smsl  = read Last SMS
-  smsr  = read SMS #
-  smss  = send SMS
-  smsd  = delete SMS #
-*/
 
 // just nice to have
 #define ON            1
@@ -79,7 +58,7 @@ int starter    = 42; // this marks the beginning of a received string. which is 
 int terminator = 35; // this marks the end of a string. which is '#' at the moment.
 
 // Puffergrösse in Bytes für den Serial port
-#define stringSize 32
+#define stringSize 32 // this amount will be reserved later
 
 String inputString = "";         // a string to hold incoming data
 boolean stringComplete = false;  // whether the string is complete
@@ -101,12 +80,9 @@ void setup()
   
   // initialize serial communication on the USB port
   while (!Serial);
-
   Serial.begin(115200);
-/*
-  Serial.println(F("FONA basic test"));
-  Serial.println(F("Initializing....(May take 3 seconds)"));
-*/
+
+  // initialize FONA
   fonaSerial->begin(4800);
   if (! fona.begin(*fonaSerial))
   {
@@ -114,9 +90,8 @@ void setup()
     while (1);
   }
   
+  // detect FONA type
   FONAtype = fona.type();
-//  Serial.println(F("FONA is OK"));
-//  Serial.print(F("Found "));
   switch (FONAtype)
   {
     case FONA800L:
@@ -133,22 +108,11 @@ void setup()
 //      Serial.println(F("FONA 3G (European)")); break;
     default: 
 //      Serial.println(F("???")); break;
-        break;
-  }
-
-  /*
-   * DISABLED
-   * 
- 
-  // Print module IMEI number.
-  char FONAimei[15] = {0}; // MUST use a 16 character buffer for IMEI!
-  uint8_t imeiLen = fona.getIMEI(FONAimei);
-  if (imeiLen > 0)
-  {
-//    Serial.print("Module IMEI: "); Serial.println(FONAimei);
+      break;
   }
 
 
+/*
   // read the battery voltage and percentage  
   if (! fona.getBattVoltage(&FONAvoltage))
   {
@@ -245,73 +209,13 @@ void loop()
   }
 
   // network/cellular status  *n___#
-  FONAnetworkStatus = fona.getNetworkStatus()
+  FONAnetworkStatus = fona.getNetworkStatus();
   Serial.print("*n");
   Serial.print(FONAnetworkStatus);
   Serial.print("#");
 
 
   delay(1000);
-
-/*
-/ *
-  //--------------------------
-  // check what was received
-  //--------------------------
-
-  // RESET / INIT
-  if (answer == "*re#")
-  {
-    // answer with "ok"
-    // this answer is used to see if the robot is "on"
-    Serial.print("*re#");
-    // write all data immediately!
-    Serial.flush();
-  }
-
-*/
-} // loop
-
-
-// FONA: read the number of SMS's
-int8_t readNumSMS()
-{
-  int8_t smsnum = fona.getNumSMS();
-
-
-  if (smsnum < 0)
-  {
-    return -1;
-  }
-
-  return smsnum; 
-}
-
-
-// FONA: Unlock the SIM with a PIN code
-int unlockSIM()
-{
-  char PIN[5];
-
-
-  // PIN
-  PIN[0] = '5';
-  PIN[1] = '5';
-  PIN[2] = '5';
-  PIN[3] = '5';
-  PIN[4] = NULL;
-
-  // unlock
-  if (! fona.unlockSIM(PIN))
-  {
-    // error
-    return -1;
-  } 
-  else
-  {
-    // ok
-    return 0;
-  }        
 }
 
 
@@ -406,13 +310,11 @@ void waitForAnswer()
 
 
 /*
-    // print the string when a newline arrives:
+  // print the string when a newline arrives:
   if (stringComplete) 
   {
     Serial.print("stringComplete (loop):"); 
-
     Serial.print(inputString); 
-
     Serial.println("<END>"); 
 
     // clear the string
@@ -426,3 +328,4 @@ void waitForAnswer()
   // delete flag
   stringComplete = false;
 }
+
