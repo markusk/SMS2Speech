@@ -201,7 +201,7 @@ void setup()
 
 void loop()
 {
-  // battery status
+  // battery status  *b___#
   if (! fona.getBattPercent(&FONAvoltage))
   {
     Serial.print("*b");
@@ -215,7 +215,7 @@ void loop()
     Serial.print("#");
   }
 
-  // number of SMS
+  // number of SMS  *s___#
   FONAsmsnum = fona.getNumSMS();
   if (FONAsmsnum < 0)
   {
