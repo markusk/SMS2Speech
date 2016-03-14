@@ -37,6 +37,7 @@ uint8_t FONAnetworkStatus = 0;
 bool SIMunlocked = false;
 int8_t FONAsmsnum = 0;
 int8_t FONAsmsInitialNum = 0;
+char FONAimei[15] = {0}; // MUST use a 16 character buffer for IMEI!
 bool initialSMScounted = false;
 
 // store the state if FONA is okay or not (init okay etc.)
@@ -140,11 +141,11 @@ void setup()
    * 
  
   // Print module IMEI number.
-  char imei[15] = {0}; // MUST use a 16 character buffer for IMEI!
-  uint8_t imeiLen = fona.getIMEI(imei);
+  char FONAimei[15] = {0}; // MUST use a 16 character buffer for IMEI!
+  uint8_t imeiLen = fona.getIMEI(FONAimei);
   if (imeiLen > 0)
   {
-//    Serial.print("Module IMEI: "); Serial.println(imei);
+//    Serial.print("Module IMEI: "); Serial.println(FONAimei);
   }
 
 
@@ -228,6 +229,21 @@ void loop()
     Serial.print(FONAsmsnum);
     Serial.print("#");
   }
+
+  // IMEI  *i___#
+  if (fona.getIMEI(FONAimei) <= 0)
+  {
+    Serial.print("*i");
+    Serial.print("err");
+    Serial.print("#");
+  }
+  else
+  {
+    Serial.print("*i");
+    Serial.print(FONAimei);
+    Serial.print("#");
+  }
+
 
 
   delay(1000);
