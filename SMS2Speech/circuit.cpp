@@ -113,6 +113,16 @@ void Circuit::run()
 							atmelAnswer.remove(atmelAnswer.lastIndexOf('#'), 1);
 							emit message(QString("IMEI: %1").arg(atmelAnswer));
 						}
+						else
+						{
+							// network/cellular status  *n___#
+							if (atmelAnswer.startsWith("*n"))
+							{
+								// convert to int
+								interface1->convertStringToInt(atmelAnswer.remove('n'), value);
+								emit message(QString("Network status: %1").arg(value));
+							}
+						}
 					}
 				}
 			}
