@@ -87,7 +87,7 @@ void Circuit::run()
 			{
 				// emit message(atmelAnswer);
 
-				// battery status
+				// battery status  *b___#
 				if (atmelAnswer.startsWith("*b"))
 				{
 					// convert to int
@@ -96,12 +96,23 @@ void Circuit::run()
 				}
 				else
 				{
-					// number of SMS
+					// number of SMS  *s___#
 					if (atmelAnswer.startsWith("*s"))
 					{
 						// convert to int
 						interface1->convertStringToInt(atmelAnswer.remove('s'), value);
 						emit message(QString("%1 SMS available.").arg(value));
+					}
+					else
+					{
+						// IMEI  *i___#
+						if (atmelAnswer.startsWith("*i"))
+						{
+							// clear string
+							atmelAnswer.remove("*i");
+							atmelAnswer.remove(atmelAnswer.lastIndexOf('#'), 1);
+							emit message(QString("IMEI: %1").arg(atmelAnswer));
+						}
 					}
 				}
 			}
