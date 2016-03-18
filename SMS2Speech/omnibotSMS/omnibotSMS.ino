@@ -35,6 +35,8 @@ int8_t FONAsmsnum = 0;
 int8_t FONAsmsInitialNum = 0;
 char FONAimei[15] = {0}; // MUST use a 16 character buffer for IMEI!
 bool initialSMScounted = false;
+char FONASMSbuffer[255];
+
 
 // store the state if FONA is okay or not (init okay etc.)
 boolean FONAstate = false;
@@ -214,7 +216,52 @@ void loop()
   Serial.print(FONAnetworkStatus);
   Serial.print("#");
 
+  // read all SMS and send them via serial
+  if (FONAsmsnum > 0)
+  {
+    // read all SMS
+    uint16_t smslen;
+    int8_t smsn;
+    
+    if ( (FONAtype == FONA3G_A) || (FONAtype == FONA3G_E) )
+    {
+      smsn = 0; // zero indexed
+      FONAsmsnum--;
+    }
+    else
+    {
+      smsn = 1;  // 1 indexed
+    }
+    
+    for ( ; smsn <= FONAsmsnum; smsn++)
+    {
+      Serial.print(F("\n\rReading SMS #")); Serial.println(smsn);
+      
+      if (!fona.readSMS(smsn, FONASMSbuffer, 250, &smslen))
+      {  // pass in buffer and max len!
+        Serial.println(F("Failed!"));
+        break;
+      }
+      
+      // if the length is zero, its a special case where the index number is higher
+      // so increase the max we'll look at!
+      if (smslen == 0)
+      {
+        Serial.println(F("[empty slot]"));
+        FONAsmsnum++;
+        continue;
+      }
+    
+      Serial.print(F("***** SMS #")); Serial.print(smsn);
+      Serial.print(" ("); Serial.print(smslen); Serial.println(F(") bytes *****"));
+      Serial.println(FONASMSbuffer);
+      Serial.println(F("*****"));
 
+      // delete sent SMS now!
+    }
+  }
+
+  // wait some time before starting again to send all stuff again
   delay(1000);
 }
 
