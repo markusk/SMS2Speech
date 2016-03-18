@@ -131,7 +131,7 @@ void Circuit::run()
 									atmelAnswer.remove("*m");
 									// SMS No.
 									// (with no line break)
-									emit message(QString("SMS No. %1:").arg(atmelAnswer.left(atmelAnswer.indexOf('=')-1)), false);
+									emit message(QString("SMS No. %1: ").arg(atmelAnswer.left(atmelAnswer.indexOf('='))), false);
 
 									// SMS text/content
 									atmelAnswer.remove(0, atmelAnswer.indexOf('=')+1); // remove chars from index until '='
