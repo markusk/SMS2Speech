@@ -181,21 +181,6 @@ void loop()
     Serial.print("#");
   }
 
-  // number of SMS  *s___#
-  FONAsmsnum = fona.getNumSMS();
-  if (FONAsmsnum < 0)
-  {
-    Serial.print("*s");
-    Serial.print("err");
-    Serial.print("#");
-  }
-  else
-  {
-    Serial.print("*s");
-    Serial.print(FONAsmsnum);
-    Serial.print("#");
-  }
-
   // IMEI  *i___#
   if (fona.getIMEI(FONAimei) <= 0)
   {
@@ -216,12 +201,28 @@ void loop()
   Serial.print(FONAnetworkStatus);
   Serial.print("#");
 
+  // number of SMS  *s___#
+  FONAsmsnum = fona.getNumSMS();
+  if (FONAsmsnum < 0)
+  {
+    Serial.print("*s");
+    Serial.print("err");
+    Serial.print("#");
+  }
+  else
+  {
+    Serial.print("*s");
+    Serial.print(FONAsmsnum);
+    Serial.print("#");
+  }
+
   // read all SMS and send them via serial
   if (FONAsmsnum > 0)
   {
     // read all SMS
     uint16_t smslen;
     int8_t smsn;
+    char string[7];
     
     if ( (FONAtype == FONA3G_A) || (FONAtype == FONA3G_E) )
     {
@@ -235,10 +236,11 @@ void loop()
     
     for ( ; smsn <= FONAsmsnum; smsn++)
     {
-      Serial.print(F("\n\rReading SMS #")); Serial.println(smsn);
-      
+      // Serial.print(F("\n\rReading SMS #")); Serial.println(smsn);
+
+      // read SMS into buffer, max length = 250
       if (!fona.readSMS(smsn, FONASMSbuffer, 250, &smslen))
-      {  // pass in buffer and max len!
+      {
         Serial.println(F("Failed!"));
         break;
       }
@@ -247,15 +249,20 @@ void loop()
       // so increase the max we'll look at!
       if (smslen == 0)
       {
-        Serial.println(F("[empty slot]"));
+        // Serial.println(F("[empty slot]"));
         FONAsmsnum++;
         continue;
       }
     
-      Serial.print(F("***** SMS #")); Serial.print(smsn);
-      Serial.print(" ("); Serial.print(smslen); Serial.println(F(") bytes *****"));
-      Serial.println(FONASMSbuffer);
-      Serial.println(F("*****"));
+      // message no xx (fixed length of 2!)  "*mxx="
+      sprintf(string,"*m%02d=", smsn);
+      Serial.print(string);
+            
+//      Serial.print(" ("); Serial.print(smslen); Serial.println(F(") bytes *****"));
+ 
+      // SMS text / content
+      Serial.print(FONASMSbuffer);
+      Serial.print("#");
 
       // delete sent SMS now!
     }
