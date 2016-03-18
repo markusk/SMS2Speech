@@ -130,12 +130,14 @@ void Circuit::run()
 									// clear parts of string
 									atmelAnswer.remove("*m");
 									// SMS No.
-									emit message(QString("SMS No. %1:").arg(atmelAnswer.left(atmelAnswer.indexOf('=')-1)));
+									// (with no line break)
+									emit message(QString("SMS No. %1:").arg(atmelAnswer.left(atmelAnswer.indexOf('=')-1)), false);
 
 									// SMS text/content
-									atmelAnswer.remove(1, atmelAnswer.indexOf('=')); // remove first characters until '='
+									atmelAnswer.remove(0, atmelAnswer.indexOf('=')+1); // remove chars from index until '='
 									atmelAnswer.remove(atmelAnswer.lastIndexOf('#'), 1);
-									emit message(QString("SMS: %1").arg(atmelAnswer));
+									// (with line break, no saying, no time stamp)
+									emit message(QString("%1").arg(atmelAnswer), true, false, false);
 								}
 							}
 						}
