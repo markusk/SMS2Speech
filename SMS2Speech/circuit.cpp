@@ -99,7 +99,7 @@ void Circuit::run()
 					// IMEI  *i___#
 					if (atmelAnswer.startsWith("*i"))
 					{
-						// clear string
+						// clear parts of string
 						atmelAnswer.remove("*i");
 						atmelAnswer.remove(atmelAnswer.lastIndexOf('#'), 1);
 						emit message(QString("IMEI: %1").arg(atmelAnswer));
@@ -121,6 +121,22 @@ void Circuit::run()
 								// convert to int
 								interface1->convertStringToInt(atmelAnswer.remove('s'), value);
 								emit message(QString("%1 SMS available.").arg(value));
+							}
+							else
+							{
+								// SMS text/message *m_=__ ... ____#
+								if (atmelAnswer.startsWith("*m"))
+								{
+									// clear parts of string
+									atmelAnswer.remove("*m");
+									// SMS No.
+									emit message(QString("SMS No. %1:").arg(atmelAnswer.left(atmelAnswer.indexOf('=')-1)));
+
+									// SMS text/content
+									atmelAnswer.remove(1, atmelAnswer.indexOf('=')); // remove first characters until '='
+									atmelAnswer.remove(atmelAnswer.lastIndexOf('#'), 1);
+									emit message(QString("SMS: %1").arg(atmelAnswer));
+								}
 							}
 						}
 					}
