@@ -92,35 +92,35 @@ void Circuit::run()
 				{
 					// convert to int
 					interface1->convertStringToInt(atmelAnswer.remove('b'), value);
-					emit message(QString("GSM-Battery: %1%").arg(value));
+					emit message(QString("Battery: %1%").arg(value));
 				}
 				else
 				{
-					// number of SMS  *s___#
-					if (atmelAnswer.startsWith("*s"))
+					// IMEI  *i___#
+					if (atmelAnswer.startsWith("*i"))
 					{
-						// convert to int
-						interface1->convertStringToInt(atmelAnswer.remove('s'), value);
-						emit message(QString("%1 SMS available.").arg(value));
+						// clear string
+						atmelAnswer.remove("*i");
+						atmelAnswer.remove(atmelAnswer.lastIndexOf('#'), 1);
+						emit message(QString("IMEI: %1").arg(atmelAnswer));
 					}
 					else
 					{
-						// IMEI  *i___#
-						if (atmelAnswer.startsWith("*i"))
+						// network/cellular status  *n___#
+						if (atmelAnswer.startsWith("*n"))
 						{
-							// clear string
-							atmelAnswer.remove("*i");
-							atmelAnswer.remove(atmelAnswer.lastIndexOf('#'), 1);
-							emit message(QString("IMEI: %1").arg(atmelAnswer));
+							// convert to int
+							interface1->convertStringToInt(atmelAnswer.remove('n'), value);
+							emit message(QString("Network status: %1").arg(value));
 						}
 						else
 						{
-							// network/cellular status  *n___#
-							if (atmelAnswer.startsWith("*n"))
+							// number of SMS  *s___#
+							if (atmelAnswer.startsWith("*s"))
 							{
 								// convert to int
-								interface1->convertStringToInt(atmelAnswer.remove('n'), value);
-								emit message(QString("Network status: %1").arg(value));
+								interface1->convertStringToInt(atmelAnswer.remove('s'), value);
+								emit message(QString("%1 SMS available.").arg(value));
 							}
 						}
 					}
