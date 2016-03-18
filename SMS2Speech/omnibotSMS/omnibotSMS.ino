@@ -255,8 +255,11 @@ void loop()
       }
     
       // message no xx (fixed length of 2!)  "*mxx="
-      sprintf(string,"*m%02d=", smsn);
-      Serial.print(string);
+//      sprintf(string,"*m%02d=", smsn);
+//      Serial.print(string);
+      Serial.print("*m");
+      Serial.print(smsn);
+      Serial.print("=");
             
 //      Serial.print(" ("); Serial.print(smslen); Serial.println(F(") bytes *****"));
  
