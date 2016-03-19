@@ -32,23 +32,28 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	// forward the speak signal and speak each SMS
 	connect(circuit1, SIGNAL(speak(QString)), this, SIGNAL(speak(QString)));
+
+	// USB port (serial connection) not opened
+	arduinoConnnected = false;
 }
 
 
 MainWindow::~MainWindow()
 {
-	emit message("Closing serial port.");
-	interface1->closeComPort();
-
-	if (gsmThread->isRunning())
+	if (circuit1->isRunning())
 	{
-		gsmThread->stop();
+		emit message("Stopping circuit thread.");
+		circuit1->stop();
 	}
 
 	if (speakThread->isRunning())
 	{
+		emit message("Stopping speech thread.");
 		speakThread->stop();
 	}
+
+	emit message("Closing serial port.");
+	interface1->closeComPort();
 
 	delete interface1;
 	delete circuit1;
@@ -59,70 +64,62 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButtonConnect_clicked()
 {
-	//-------------------------------------------------------
-	// Open serial port from Arduino for communication
-	//-------------------------------------------------------
-	serialPortMicrocontroller = ui->lineEditUSBPort->text();
-
-	emit message(QString("Opening serial port %1...").arg(serialPortMicrocontroller));
-
-	if (interface1->openComPort(serialPortMicrocontroller) == false)
+	if (arduinoConnnected == false)
 	{
-		emit message("ERROR opeing serial port.");
+		//-------------------------------------------------------
+		// Open serial port from Arduino for communication
+		//-------------------------------------------------------
+		serialPortMicrocontroller = ui->lineEditUSBPort->text();
+
+		emit message(QString("Opening serial port %1...").arg(serialPortMicrocontroller));
+
+		if (interface1->openComPort(serialPortMicrocontroller) == false)
+		{
+			arduinoConnnected = false;
+			emit message("ERROR opeing serial port.");
+		}
+		else
+		{
+			//
+			// USB Port Okay
+			//
+			arduinoConnnected = true;
+
+			// change push button text
+			ui->pushButtonConnect->setText("Disconnect");
+
+			emit message("Serial port opened.");
+			emit message("Establishing connection to Arduino...");
+
+			if (circuit1->isRunning() == false)
+			{
+				emit message("Starting cicuit thread...");
+				circuit1->start();
+				emit message("Cicuit thread started.");
+			}
+		}
 	}
 	else
 	{
-		//
-		// USB Port Okay
-		//
-		emit message("Serial port opened.");
+		//------------------------------
+		// CLose serial port to Arduino
+		//------------------------------
+		arduinoConnnected = false;
 
-		// call Slot initArduino on Signal checkArduinoState
-		// connect(this, SIGNAL(checkArduinoState()), circuit1, SLOT(initArduino()));
-
-		emit message("Establishing connection to Arduino...");
-//		circuit1->initArduino();
-
-		if (circuit1->isRunning() == false)
+		if (circuit1->isRunning())
 		{
-			emit message("Starting cicuit thread...");
-			circuit1->start();
-			emit message("Cicuit thread started.");
+			emit message("Stopping cicuit thread...");
+			circuit1->stop();
+			emit message("Cicuit thread stopped.");
 		}
-/*
-		// start the GSM thread
-		if (gsmThread->isRunning() == false)
-		{
-			// whenever there is a material error, react!
-			//connect(gsmThread, SIGNAL( systemerror(int) ), this, SLOT( systemerrorcatcher(int) ) );
 
-			// show GSM status in the GUI
-			//connect(gsmThread, SIGNAL(GSMStatus(unsigned char)), gui, SLOT(setLEDGSM(unsigned char)));
+		emit message("Closing serial port.");
+		interface1->closeComPort();
 
-			//----------------------
-			// init the GSM module
-			//----------------------
-			emit message("Initialising GSM module...", false);
+		// change push button text
+		ui->pushButtonConnect->setText("Connect");
 
-			if (gsmThread->init() == true)
-			{
-				emit message("GSM module initialised.");
-
-				// show SMS available in the GUI
-				//connect(gsmThread, SIGNAL(SMSavailable(int, QString)), gui, SLOT(showSMSavailable(int)));
-
-				// "new SMS" handling
-				//connect(gsmThread, SIGNAL(SMSavailable(int, QString)), this, SLOT(SMSTracking(int, QString)));
-
-				emit message("Starting GSM thread...");
-
-				// NOW start the run() method inside!
-				gsmThread->start();
-
-				emit message("GSM thread started.");
-			}
-		}
-*/
+		emit message("Serial port closed.");
 	}
 }
 

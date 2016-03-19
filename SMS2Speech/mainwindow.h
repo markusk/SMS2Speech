@@ -70,6 +70,7 @@ private:
 	QDateTime now; /// this is for the timestamp in the logs in the gui
 	QString serialPortMicrocontroller;
 	mutable QMutex *mutex; // make the threads thread-safe (e.g. senorThread, servo...)
+	bool arduinoConnnected;
 };
 
 #endif // MAINWINDOW_H
