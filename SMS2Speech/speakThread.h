@@ -39,7 +39,7 @@
 \brief Speaks a text with espeak (Linux) or QtSpeech (Mac OS)
 
 Also removes HTML-Tags from the text to speak in case of we got the text from a text edit field.
-If a text is already spoken, this former speach is stopped and the next text is about to speak.
+The texts to be spoken are queued and spoken one ofter another.
 */
 class SpeakThread : public QThread
 {

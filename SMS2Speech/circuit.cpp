@@ -140,7 +140,7 @@ void Circuit::run()
 									emit message(QString("%1").arg(atmelAnswer), true, false, false);
 
 									// speak this SMS
-									emit speakSMS(atmelAnswer);
+									emit speak(atmelAnswer);
 								}
 							}
 						}

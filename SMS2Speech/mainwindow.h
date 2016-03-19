@@ -33,12 +33,6 @@ public slots:
 	 */
 	void appendLog(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true);
 
-	/**
-	  Takes SMS messages to be spoken from the @sa SpeakThread
-	  When a SMS is spoken, it also takes a Signal and emits the next text to speak.
-	  */
-	void SMSspeaker(QString text = "", bool textSpoken=false);
-
 protected slots:
 	void on_pushButtonConnect_clicked();
 	void on_pushButtonSpeak_clicked();

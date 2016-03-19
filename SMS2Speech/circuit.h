@@ -100,7 +100,7 @@ class Circuit : public QThread
 		void message(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true);
 
 		/// Emits the SMS text to be spoken
-		void speakSMS(QString text);
+		void speak(QString text);
 
 
 

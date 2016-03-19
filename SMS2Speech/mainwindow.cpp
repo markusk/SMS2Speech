@@ -30,8 +30,8 @@ MainWindow::MainWindow(QWidget *parent) :
 		emit message("Speak thread started.");
 	}
 
-	// let this class speak SMS, received from circuit class
-	connect(circuit1, SIGNAL(speakSMS(QString)), this, SLOT(SMSspeaker(QString)));
+	// forward the speak signal and speak each SMS
+	connect(circuit1, SIGNAL(speak(QString)), this, SIGNAL(speak(QString)));
 }
 
 
@@ -141,16 +141,6 @@ void MainWindow::on_pushButtonSendCommand_clicked()
 {
 	emit message("Sending command...");
 }
-
-
-void MainWindow::SMSspeaker(QString text, bool textSpoken)
-{
-	// static bool testSaid = false;
-
-	// speak it via speakThread
-	emit speak(text);
-}
-
 
 void MainWindow::appendLog(QString text, bool CR, bool sayIt, bool addTimestamp)
 {
