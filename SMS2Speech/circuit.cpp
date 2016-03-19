@@ -138,6 +138,9 @@ void Circuit::run()
 									atmelAnswer.remove(atmelAnswer.lastIndexOf('#'), 1);
 									// (with line break, no saying, no time stamp)
 									emit message(QString("%1").arg(atmelAnswer), true, false, false);
+
+									// speak this SMS
+									emit speakSMS(atmelAnswer);
 								}
 							}
 						}
