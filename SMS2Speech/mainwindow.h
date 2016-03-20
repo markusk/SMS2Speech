@@ -33,6 +33,11 @@ public slots:
 	void appendLog(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true);
 
 	/**
+	  Show the Arduino status in the GUI
+	  */
+	void showArduinoStatus(QString status);
+
+	/**
 	  Show the network status in the GUI
 	  */
 	void showNetworkStatus(int status);

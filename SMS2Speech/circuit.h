@@ -102,6 +102,9 @@ class Circuit : public QThread
 		/// Emits the SMS text to be spoken
 		void speak(QString text);
 
+		/// emits the Arduino status (connected or not)
+		void arduinoStatus(QString status);
+
 		/// emits the GSM network status
 		void networkStatus(int status);
 

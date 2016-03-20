@@ -73,10 +73,12 @@ void Circuit::run()
 				if (initArduino() == false)
 				{
 					// fail
+					emit arduinoStatus("disconnected");
 				}
 				else
 				{
 					// success. Next steps below...
+					emit arduinoStatus("connected");
 				}
 			}
 

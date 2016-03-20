@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	// show status of hardware in GUI
 	connect(circuit1, SIGNAL(networkStatus(int)), this, SLOT(showNetworkStatus(int)));
+	connect(circuit1, SIGNAL(arduinoStatus(QString)), this, SLOT(showArduinoStatus(QString)));
 
 	// speech
 	connect(this, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
@@ -162,6 +163,11 @@ void MainWindow::appendLog(QString text, bool CR, bool sayIt, bool addTimestamp)
 	{
 		emit speak(text);
 	}
+}
+
+void MainWindow::showArduinoStatus(QString status)
+{
+	ui->labelArduinoStatus->setText(status);
 }
 
 void MainWindow::showNetworkStatus(int status)
