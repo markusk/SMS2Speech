@@ -124,6 +124,7 @@ void Circuit::run()
 								// convert to int
 								interface1->convertStringToInt(atmelAnswer.remove('s'), value);
 								emit message(QString("%1 SMS available.").arg(value));
+								emit numberSMS(value);
 							}
 							else
 							{

@@ -42,6 +42,11 @@ public slots:
 	  */
 	void showNetworkStatus(int status);
 
+	/**
+	  Show the number of SMS in the GUI
+	  */
+	void showNumberSMS(int amount);
+
 protected slots:
 	void on_pushButtonConnect_clicked();
 	void on_pushButtonSpeak_clicked();

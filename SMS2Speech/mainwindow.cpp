@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	// show status of hardware in GUI
 	connect(circuit1, SIGNAL(networkStatus(int)), this, SLOT(showNetworkStatus(int)));
 	connect(circuit1, SIGNAL(arduinoStatus(QString)), this, SLOT(showArduinoStatus(QString)));
+	connect(circuit1, SIGNAL(numberSMS(int)), this, SLOT(showNumberSMS(int)));
 
 	// speech
 	connect(this, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
@@ -207,4 +208,9 @@ void MainWindow::showNetworkStatus(int status)
 		ui->labelNetworkStatus->setText("Registered roaming");
 		return;
 	}
+}
+
+void MainWindow::showNumberSMS(int amount)
+{
+	ui->labelNumberSMS->setText(QString("%1").arg(amount));
 }
