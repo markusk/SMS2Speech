@@ -33,6 +33,11 @@ public slots:
 	 */
 	void appendLog(QString text, bool CR=true, bool sayIt=false, bool addTimestamp=true);
 
+	/**
+	  Show the network status in the GUI
+	  */
+	void showNetworkStatus(int status);
+
 protected slots:
 	void on_pushButtonConnect_clicked();
 	void on_pushButtonSpeak_clicked();

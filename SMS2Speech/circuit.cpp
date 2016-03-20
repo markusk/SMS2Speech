@@ -112,6 +112,7 @@ void Circuit::run()
 							// convert to int
 							interface1->convertStringToInt(atmelAnswer.remove('n'), value);
 							emit message(QString("Network status: %1").arg(value));
+							emit networkStatus(value);
 						}
 						else
 						{

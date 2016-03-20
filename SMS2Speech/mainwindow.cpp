@@ -20,6 +20,9 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(circuit1, SIGNAL( message(QString, bool, bool, bool)), this, SLOT(appendLog(QString, bool, bool, bool)));
 	connect(gsmThread, SIGNAL(message(QString, bool, bool, bool)), this, SLOT(appendLog(QString, bool, bool, bool)));
 
+	// show status of hardware in GUI
+	connect(circuit1, SIGNAL(networkStatus(int)), this, SLOT(showNetworkStatus(int)));
+
 	// speech
 	connect(this, SIGNAL( speak(QString) ), speakThread, SLOT( speak(QString) ));
 
@@ -166,5 +169,44 @@ void MainWindow::appendLog(QString text, bool CR, bool sayIt, bool addTimestamp)
 	if (sayIt == true)
 	{
 		emit speak(text);
+	}
+}
+
+void MainWindow::showNetworkStatus(int status)
+{
+	if (status == 0)
+	{
+		ui->labelNetworkStatus->setText("Not registered [0]");
+		return;
+	}
+
+	if (status == 1)
+	{
+		ui->labelNetworkStatus->setText("Registered (home)");
+		return;
+	}
+
+	if (status == 2)
+	{
+		ui->labelNetworkStatus->setText("Not registered (searching)");
+		return;
+	}
+
+	if (status == 3)
+	{
+		ui->labelNetworkStatus->setText("Denied");
+		return;
+	}
+
+	if (status == 4)
+	{
+		ui->labelNetworkStatus->setText("Unknown");
+		return;
+	}
+
+	if (status == 5)
+	{
+		ui->labelNetworkStatus->setText("Registered roaming");
+		return;
 	}
 }
