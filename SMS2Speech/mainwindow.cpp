@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(circuit1, SIGNAL( message(QString, bool, bool, bool)), this, SLOT(appendLog(QString, bool, bool, bool)));
 
 	// show status of hardware in GUI
+	connect(circuit1, SIGNAL(batteryStatus(int)), this, SLOT(showBatteryPercent(int)));
 	connect(circuit1, SIGNAL(networkStatus(int)), this, SLOT(showNetworkStatus(int)));
 	connect(circuit1, SIGNAL(arduinoStatus(QString)), this, SLOT(showArduinoStatus(QString)));
 	connect(circuit1, SIGNAL(numberSMS(int)), this, SLOT(showNumberSMS(int)));
@@ -169,6 +170,11 @@ void MainWindow::appendLog(QString text, bool CR, bool sayIt, bool addTimestamp)
 void MainWindow::showArduinoStatus(QString status)
 {
 	ui->labelArduinoStatus->setText(status);
+}
+
+void MainWindow::showBatteryPercent(int percent)
+{
+	ui->labelBatteryPercent->setText(QString("%1%").arg(percent));
 }
 
 void MainWindow::showNetworkStatus(int status)

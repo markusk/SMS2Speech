@@ -38,6 +38,11 @@ public slots:
 	void showArduinoStatus(QString status);
 
 	/**
+	  Show the battery status in the GUI
+	  */
+	void showBatteryPercent(int percent);
+
+	/**
 	  Show the network status in the GUI
 	  */
 	void showNetworkStatus(int status);

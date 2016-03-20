@@ -108,6 +108,9 @@ class Circuit : public QThread
 		/// emits the GSM network status
 		void networkStatus(int status);
 
+		/// emits the battery status
+		void batteryStatus(int percent);
+
 		/// emits the number of SMS
 		void numberSMS(int amount);
 

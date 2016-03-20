@@ -95,6 +95,7 @@ void Circuit::run()
 					// convert to int
 					interface1->convertStringToInt(atmelAnswer.remove('b'), value);
 					emit message(QString("Battery: %1%").arg(value));
+					emit batteryStatus(value);
 				}
 				else
 				{
