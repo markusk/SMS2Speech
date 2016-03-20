@@ -12,13 +12,11 @@ MainWindow::MainWindow(QWidget *parent) :
 	interface1 = new InterfaceAvr();
 	circuit1 = new Circuit(interface1, mutex);
 	speakThread = new SpeakThread();
-	gsmThread = new GSMThread(interface1, mutex);
 
 	// show messages in the GUI log or in the console
 	connect(this, SIGNAL( message(QString, bool, bool, bool) ), this, SLOT( appendLog(QString, bool, bool, bool) ));
 	connect(interface1, SIGNAL( message(QString,bool,bool,bool)), this, SLOT(appendLog(QString,bool,bool,bool)));
 	connect(circuit1, SIGNAL( message(QString, bool, bool, bool)), this, SLOT(appendLog(QString, bool, bool, bool)));
-	connect(gsmThread, SIGNAL(message(QString, bool, bool, bool)), this, SLOT(appendLog(QString, bool, bool, bool)));
 
 	// show status of hardware in GUI
 	connect(circuit1, SIGNAL(networkStatus(int)), this, SLOT(showNetworkStatus(int)));
@@ -60,7 +58,6 @@ MainWindow::~MainWindow()
 
 	delete interface1;
 	delete circuit1;
-	delete gsmThread;
 	delete speakThread;
 	delete ui;
 }
@@ -135,11 +132,6 @@ void MainWindow::on_pushButtonSpeak_clicked()
 void MainWindow::on_pushButtonQuit_clicked()
 {
 	close();
-}
-
-void MainWindow::on_pushButtonSendCommand_clicked()
-{
-	emit message("Sending command...");
 }
 
 void MainWindow::appendLog(QString text, bool CR, bool sayIt, bool addTimestamp)
