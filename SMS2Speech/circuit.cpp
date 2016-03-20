@@ -141,6 +141,12 @@ void Circuit::run()
 
 									// speak this SMS
 									emit speak(atmelAnswer);
+
+									// Arduino sends error when deleting SMS
+									if (atmelAnswer == "Error deleting SMS.")
+									{
+										emit message("<font color=\"#FF0000\">ERROR deleting SMS on Arduino.</font>");
+									}
 								}
 							}
 						}

@@ -37,6 +37,14 @@ char FONAimei[15] = {0}; // MUST use a 16 character buffer for IMEI!
 bool initialSMScounted = false;
 char FONASMSbuffer[255];
 
+//--------------------------------------------------------------------
+// Delete SMS after transfer
+//--------------------------------------------------------------------
+const bool deleteSMSafterTransfer = true;
+//--------------------------------------------------------------------
+
+
+
 
 // store the state if FONA is okay or not (init okay etc.)
 boolean FONAstate = false;
@@ -268,6 +276,17 @@ void loop()
       Serial.print("#");
 
       // delete sent SMS now!
+      if (deleteSMSafterTransfer == true)
+      {
+        // if delete SMS does not workd
+        if (fona.deleteSMS(smsn) == false)
+        {
+          Serial.print("*m");
+          Serial.print(smsn);
+          Serial.print("=Error deleting SMS.");
+          Serial.print("#");
+        }
+      }
     }
   }
 
