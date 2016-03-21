@@ -44,21 +44,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-	if (circuit1->isRunning())
-	{
-		emit message("Stopping circuit thread.");
-		circuit1->stop();
-	}
-
-	if (speakThread->isRunning())
-	{
-		emit message("Stopping speech thread.");
-		speakThread->stop();
-	}
-
-	emit message("Closing serial port.");
-	interface1->closeComPort();
-
 	delete interface1;
 	delete circuit1;
 	delete speakThread;
@@ -135,6 +120,31 @@ void MainWindow::on_pushButtonSpeak_clicked()
 void MainWindow::on_pushButtonQuit_clicked()
 {
 	close();
+}
+
+void MainWindow::closeEvent(QCloseEvent *)
+{
+	if (circuit1->isRunning())
+	{
+		emit message("Stopping circuit thread.");
+		circuit1->stop();
+	}
+
+	if (speakThread->isRunning())
+	{
+		emit message("Stopping speech thread.");
+		speakThread->stop();
+	}
+
+	emit message("Closing serial port.");
+	interface1->closeComPort();
+}
+
+void MainWindow::on_pushButtonReset_clicked()
+{
+	appendLog("RESETTING...!");
+	circuit1->reset();
+	appendLog("Done.");
 }
 
 void MainWindow::appendLog(QString text, bool CR, bool sayIt, bool addTimestamp)
