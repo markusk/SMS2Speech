@@ -56,6 +56,7 @@ protected slots:
 	void on_pushButtonConnect_clicked();
 	void on_pushButtonSpeak_clicked();
 	void on_pushButtonQuit_clicked();
+	void on_pushButtonReset_clicked();
 
 signals:
 	/**
@@ -78,6 +79,8 @@ signals:
 	 */
 	void checkArduinoState();
 
+protected:
+	void closeEvent(QCloseEvent *event);
 
 private:
 	Ui::MainWindow *ui;

@@ -243,6 +243,18 @@ bool Circuit::initArduino()
 }
 
 
+void Circuit::reset()
+{
+	stopped = true;
+
+	// answer with same command to Arduino
+	if (interface1->sendString("ATZ", className) == true)
+	{
+		stopped = false;
+	}
+}
+
+
 bool Circuit::isConnected()
 {
 	// if not tried to init hardware, do this!

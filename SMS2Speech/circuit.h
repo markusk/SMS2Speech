@@ -56,6 +56,9 @@ class Circuit : public QThread
 		*/
 		bool isConnected();
 
+		/// reset the FONA to factory defaults
+		void reset();
+
 
 	public slots:
 		/**
