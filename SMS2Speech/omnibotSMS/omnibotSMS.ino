@@ -1,7 +1,9 @@
 // For Adafruit FONA
 #include <Adafruit_FONA.h>
 
+//-----------------------------
 // Disable FONA debugging!
+//-----------------------------
 #ifdef ADAFRUIT_FONA_DEBUG
   #undef ADAFRUIT_FONA_DEBUG
 #endif
@@ -40,7 +42,7 @@ char FONASMSbuffer[255];
 //--------------------------------------------------------------------
 // Delete SMS after transfer
 //--------------------------------------------------------------------
-const bool deleteSMSafterTransfer = true;
+const bool deleteSMSafterTransfer = false;
 //--------------------------------------------------------------------
 
 
@@ -263,16 +265,27 @@ void loop()
       }
     
       // message no xx (fixed length of 2!)  "*mxx="
-//      sprintf(string,"*m%02d=", smsn);
-//      Serial.print(string);
       Serial.print("*m");
       Serial.print(smsn);
       Serial.print("=");
-            
-//      Serial.print(" ("); Serial.print(smslen); Serial.println(F(") bytes *****"));
- 
+       
       // SMS text / content
-      Serial.print(FONASMSbuffer);
+      //
+      // Fix umlauts & Co. since there is no UTF8 during serial ASCII transfer!!
+      String textWithCorrectUmlauts(FONASMSbuffer);
+      // fix 'ä'
+      textWithCorrectUmlauts.replace(0xE4, 'ä');    textWithCorrectUmlauts.replace(0xC4, 'Ä');
+      // fix 'ö'
+      textWithCorrectUmlauts.replace(0xF6, 'ö');    textWithCorrectUmlauts.replace(0xD6, 'Ö');
+      // fix 'ü'
+      textWithCorrectUmlauts.replace(0xFC, 'ü');    textWithCorrectUmlauts.replace(0xDC, 'Ü');
+      // fix 'ß'
+      textWithCorrectUmlauts.replace(0xDF, 'ß');
+      // fix '€'
+      textWithCorrectUmlauts.replace(0x80, '€');
+
+      // send converted SMS content
+      Serial.print(textWithCorrectUmlauts);
       Serial.print("#");
 
       // delete sent SMS now!
