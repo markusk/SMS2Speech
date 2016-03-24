@@ -57,6 +57,7 @@ protected slots:
 	void on_pushButtonSpeak_clicked();
 	void on_pushButtonQuit_clicked();
 	void on_pushButtonReset_clicked();
+	void on_actionQuit_triggered();
 
 signals:
 	/**

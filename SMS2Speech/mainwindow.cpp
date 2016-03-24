@@ -122,6 +122,11 @@ void MainWindow::on_pushButtonQuit_clicked()
 	close();
 }
 
+void MainWindow::on_actionQuit_triggered()
+{
+	close();
+}
+
 void MainWindow::closeEvent(QCloseEvent *)
 {
 	if (circuit1->isRunning())
