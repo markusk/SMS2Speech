@@ -1,13 +1,19 @@
 // For Adafruit FONA
 #include <Adafruit_FONA.h>
 
-//-----------------------------
+//--------------------------------------------------------------------
 // Disable FONA debugging!
-//-----------------------------
 #ifdef ADAFRUIT_FONA_DEBUG
   #undef ADAFRUIT_FONA_DEBUG
 #endif
 
+
+//--------------------------------------------------------------------
+// Delete SMS after transfer
+const bool deleteSMSafterTransfer = false;
+
+
+//--------------------------------------------------------------------
 // Arduino Pins
 #define FONA_RX 2
 #define FONA_TX 10 // digital 10 for Mega, otherwise digital 3
@@ -38,14 +44,6 @@ int8_t FONAsmsInitialNum = 0;
 char FONAimei[15] = {0}; // MUST use a 16 character buffer for IMEI!
 bool initialSMScounted = false;
 char FONASMSbuffer[255];
-
-//--------------------------------------------------------------------
-// Delete SMS after transfer
-//--------------------------------------------------------------------
-const bool deleteSMSafterTransfer = false;
-//--------------------------------------------------------------------
-
-
 
 
 // store the state if FONA is okay or not (init okay etc.)
@@ -268,13 +266,14 @@ void loop()
       Serial.print("*m");
       Serial.print(smsn);
       Serial.print("=");
-       
+
+/*
       // SMS text / content
       //
       // Fix umlauts & Co. since there is no UTF8 during serial ASCII transfer!!
       String textWithCorrectUmlauts(FONASMSbuffer);
       // fix 'ä'
-      textWithCorrectUmlauts.replace(0xE4, 'ä');    textWithCorrectUmlauts.replace(0xC4, 'Ä');
+      textWithCorrectUmlauts.replace(0xE4, 'ä');    textWithCorrectUmlauts.replace(0xC4, "Ä");
       // fix 'ö'
       textWithCorrectUmlauts.replace(0xF6, 'ö');    textWithCorrectUmlauts.replace(0xD6, 'Ö');
       // fix 'ü'
@@ -286,6 +285,9 @@ void loop()
 
       // send converted SMS content
       Serial.print(textWithCorrectUmlauts);
+*/
+      // send SMS content
+      Serial.print(FONASMSbuffer);
       Serial.print("#");
 
       // delete sent SMS now!

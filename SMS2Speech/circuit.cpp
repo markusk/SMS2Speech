@@ -141,6 +141,23 @@ void Circuit::run()
 									// SMS text/content
 									atmelAnswer.remove(0, atmelAnswer.indexOf('=')+1); // remove chars from index until '='
 									atmelAnswer.remove(atmelAnswer.lastIndexOf('#'), 1);
+
+/*
+									// change special chars to Umlauts
+									//
+									// ö=ˆ ä=‰ ü=¸ ß=ﬂ
+									QChar *data = atmelAnswer.data();
+
+									emit message(QString("TEST QChar:%1=%2.").arg( atmelAnswer.mid(7, 1) ).arg( data[7].unicode() ), true, false, false);
+									emit message(QString("TEST QChar:%1=%2.").arg( atmelAnswer.mid(8, 1) ).arg( data[8].unicode() ), true, false, false);
+									emit message(QString("TEST QChar:%1=%2.").arg( atmelAnswer.mid(9, 1) ).arg( data[9 ].unicode() ), true, false, false);
+
+									atmelAnswer.replace(0xA4, QString("ä"));
+									atmelAnswer.replace("ˆ", "ö");
+									atmelAnswer.replace("¸", "ü");
+									atmelAnswer.replace("ﬂ", "ß");
+*/
+
 									// (with line break, no saying, no time stamp)
 									emit message(QString("%1").arg(atmelAnswer), true, false, false);
 
