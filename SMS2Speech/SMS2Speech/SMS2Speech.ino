@@ -188,7 +188,7 @@ void loop()
     Serial.print(FONAvoltage);
     Serial.print("#");
   }
-
+/*
   // IMEI  *i___#
   if (fona.getIMEI(FONAimei) <= 0)
   {
@@ -202,7 +202,7 @@ void loop()
     Serial.print(FONAimei);
     Serial.print("#");
   }
-
+*/
   // network/cellular status  *n___#
   FONAnetworkStatus = fona.getNetworkStatus();
   Serial.print("*n");
