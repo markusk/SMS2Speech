@@ -225,8 +225,8 @@ void loop()
   }
 
   // read all SMS and send them via serial
-  if (FONAsmsnum > 0)
-  {
+  //if (FONAsmsnum > 0)
+  //{
     // read all SMS
     uint16_t smslen;
     int8_t smsn;
@@ -303,7 +303,7 @@ void loop()
         }
       }
     }
-  }
+//  }
 
   // wait some time before starting again to send all stuff again
   delay(1000);
