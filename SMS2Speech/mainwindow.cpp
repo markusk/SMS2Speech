@@ -218,6 +218,7 @@ void MainWindow::showArduinoStatus(QString status)
 void MainWindow::showBatteryPercent(int percent)
 {
 	ui->labelBatteryPercent->setText(QString("%1%").arg(percent));
+	ui->progressBarBattery->setValue(percent);
 }
 
 void MainWindow::showNetworkStatus(int status)
