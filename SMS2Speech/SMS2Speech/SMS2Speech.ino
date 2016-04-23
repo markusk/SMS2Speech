@@ -10,7 +10,7 @@
 
 //--------------------------------------------------------------------
 // Delete SMS after transfer
-const bool deleteSMSafterTransfer = false;
+const bool deleteSMSafterTransfer = true;
 
 
 //--------------------------------------------------------------------
