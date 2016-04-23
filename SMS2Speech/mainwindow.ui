@@ -200,7 +200,7 @@
         <item>
          <widget class="QLabel" name="labelBatteryPercent">
           <property name="text">
-           <string>100%</string>
+           <string>-</string>
           </property>
          </widget>
         </item>
@@ -231,7 +231,7 @@
         <item>
          <widget class="QLabel" name="labelNetworkStatus">
           <property name="text">
-           <string>Not registered (searching) [2]</string>
+           <string>-</string>
           </property>
          </widget>
         </item>
@@ -262,7 +262,7 @@
         <item>
          <widget class="QLabel" name="labelNumberSMS">
           <property name="text">
-           <string>0</string>
+           <string>-</string>
           </property>
          </widget>
         </item>
