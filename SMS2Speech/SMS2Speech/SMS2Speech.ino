@@ -10,7 +10,7 @@
 
 //--------------------------------------------------------------------
 // Delete SMS after transfer
-const bool deleteSMSafterTransfer = true;
+bool deleteSMSafterTransfer = true;
 
 
 //--------------------------------------------------------------------
@@ -169,7 +169,16 @@ void setup()
 //    Serial.print("answer=");
 //    Serial.println(answer);
     
-  } while(answer != "*cstart#");
+  } while( (answer != "*cstarttrue#") && (answer != "*cstartfalse#") );
+
+  if (answer == "*cstarttrue#")
+  {
+    deleteSMSafterTransfer = true;
+  }
+  else
+  {
+    deleteSMSafterTransfer = false;
+  }
 }
 
 
