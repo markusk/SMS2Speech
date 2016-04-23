@@ -87,7 +87,8 @@ void Circuit::run()
 			// check next info from Arduino
 			if (interface1->receiveString(atmelAnswer, className) == true)
 			{
-				// emit message(atmelAnswer);
+				// debugging
+				// emit message(QString("<font color=\"#0000FF\">STRING: %1</font>").arg(atmelAnswer));
 
 				// battery status  *b___#
 				if (atmelAnswer.startsWith("*b"))
