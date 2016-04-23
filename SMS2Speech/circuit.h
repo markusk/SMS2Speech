@@ -87,6 +87,12 @@ class Circuit : public QThread
 		 */
 		void setRobotState(bool state);
 
+		/**
+		 * @brief Sends a "command" to the Arduino to delete an SMS after is was sent to the computer.
+		 * @param state can be true or false
+		 */
+		void setSMSdeletion(bool state);
+
 
 	signals:
 		/**

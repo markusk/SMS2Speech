@@ -37,7 +37,7 @@ Circuit::Circuit(InterfaceAvr *i, QMutex *m)
 	expectedAtmelAnswer = "error";
 
 	// theAtmelcommands
-	commandInitCircuit	= "cstart";
+	commandInitCircuit	= "cstarttrue";
 	commandSleep		= "sl";
 }
 
@@ -290,7 +290,20 @@ void Circuit::setRobotState(bool state)
 {
 	// store the state within this class
 	circuitState = state;
-//	qDebug("Circuit::setRobotState: state=%d", circuitState);
+	//	qDebug("Circuit::setRobotState: state=%d", circuitState);
+}
+
+
+void Circuit::setSMSdeletion(bool state)
+{
+	if (state)
+	{
+		commandInitCircuit = "cstarttrue";
+	}
+	else
+	{
+		commandInitCircuit = "cstartfalse";
+	}
 }
 
 
