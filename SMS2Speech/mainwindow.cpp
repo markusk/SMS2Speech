@@ -5,6 +5,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::MainWindow)
 {
+	QApplication::setWindowIcon(QIcon("SMS2Speech.icns"));
+
 	ui->setupUi(this);
 
 	mutex = new QMutex();
