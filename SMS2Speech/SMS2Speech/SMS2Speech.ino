@@ -306,7 +306,7 @@ void loop()
 //  }
 
   // wait some time before starting again to send all stuff again
-  delay(1000);
+  delay(250);
 }
 
 
