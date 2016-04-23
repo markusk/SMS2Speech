@@ -125,7 +125,7 @@
       </item>
      </layout>
     </item>
-    <item row="2" column="0">
+    <item row="3" column="0">
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout_13">
@@ -280,6 +280,19 @@
          </spacer>
         </item>
         <item>
+         <widget class="QCheckBox" name="checkBoxDeleteSMS">
+          <property name="toolTip">
+           <string>Delete SMS after it was spoken.</string>
+          </property>
+          <property name="text">
+           <string>Delete SMS</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="pushButtonReset">
           <property name="text">
            <string>Reset</string>
@@ -290,7 +303,7 @@
       </item>
      </layout>
     </item>
-    <item row="3" column="0">
+    <item row="5" column="0">
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout_3">

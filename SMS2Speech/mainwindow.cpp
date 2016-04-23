@@ -39,6 +39,9 @@ MainWindow::MainWindow(QWidget *parent) :
 	// forward the speak signal and speak each SMS
 	connect(circuit1, SIGNAL(speak(QString)), this, SIGNAL(speak(QString)));
 
+	// let circuit class know if we want to delete every SMS if it was spoken
+	connect(this, SIGNAL(deleteSMS(bool)), circuit1, SLOT(setSMSdeletion(bool)));
+
 	// USB port (serial connection) not opened
 	arduinoConnnected = false;
 }
@@ -78,6 +81,12 @@ void MainWindow::on_pushButtonConnect_clicked()
 			// change push button text
 			ui->pushButtonConnect->setText("Disconnect");
 
+			// disable checkbox for SMS deletion
+			ui->checkBoxDeleteSMS->setEnabled(false);
+
+			// send checkbox state to circuit class
+			emit deleteSMS(ui->checkBoxDeleteSMS->isChecked());
+
 			emit message("Serial port opened.");
 			emit message("Establishing connection to Arduino...");
 
@@ -109,6 +118,9 @@ void MainWindow::on_pushButtonConnect_clicked()
 		// change push button text
 		ui->pushButtonConnect->setText("Connect");
 
+		// ensable checkbox for SMS deletion
+		ui->checkBoxDeleteSMS->setEnabled(true);
+
 		emit message("Serial port closed.");
 	}
 }
@@ -128,6 +140,20 @@ void MainWindow::on_actionQuit_triggered()
 {
 	close();
 }
+
+
+void MainWindow::on_checkBoxDeleteSMS_stateChanged(int state)
+{
+	if (state == Qt::Checked)
+	{
+		emit deleteSMS(true);
+	}
+	else
+	{
+		emit deleteSMS(false);
+	}
+}
+
 
 void MainWindow::closeEvent(QCloseEvent *)
 {

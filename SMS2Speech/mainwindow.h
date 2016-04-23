@@ -58,6 +58,7 @@ protected slots:
 	void on_pushButtonQuit_clicked();
 	void on_pushButtonReset_clicked();
 	void on_actionQuit_triggered();
+	void on_checkBoxDeleteSMS_stateChanged(int state);
 
 signals:
 	/**
@@ -79,6 +80,13 @@ signals:
 	 * @brief checkArduinoState
 	 */
 	void checkArduinoState();
+
+	/**
+	 * @brief Lets the circuit class know, if we should each SMS after it was spoken.
+	 * @param state can be true or false
+	 */
+	void deleteSMS(bool state);
+
 
 protected:
 	void closeEvent(QCloseEvent *event);
