@@ -180,13 +180,13 @@ void loop()
   {
     Serial.print("*b");
     Serial.print("err");
-    Serial.println("#");
+    Serial.print("#");
   }
   else
   {
     Serial.print("*b");
     Serial.print(FONAvoltage);
-    Serial.println("#");
+    Serial.print("#");
   }
 /*
   // IMEI  *i___#
@@ -194,20 +194,20 @@ void loop()
   {
     Serial.print("*i");
     Serial.print("err");
-    Serial.println("#");
+    Serial.print("#");
   }
   else
   {
     Serial.print("*i");
     Serial.print(FONAimei);
-    Serial.println("#");
+    Serial.print("#");
   }
 */
   // network/cellular status  *n___#
   FONAnetworkStatus = fona.getNetworkStatus();
   Serial.print("*n");
   Serial.print(FONAnetworkStatus);
-  Serial.println("#");
+  Serial.print("#");
 
   // number of SMS  *s___#
   FONAsmsnum = fona.getNumSMS();
@@ -215,13 +215,13 @@ void loop()
   {
     Serial.print("*s");
     Serial.print("err");
-    Serial.println("#");
+    Serial.print("#");
   }
   else
   {
     Serial.print("*s");
     Serial.print(FONAsmsnum);
-    Serial.println("#");
+    Serial.print("#");
   }
 
   // read all SMS and send them via serial
@@ -249,7 +249,7 @@ void loop()
       // read SMS into buffer, max length = 250
       if (!fona.readSMS(smsn, FONASMSbuffer, 250, &smslen))
       {
-        Serial.println(F("Failed!"));
+        Serial.print(F("Failed!"));
         break;
       }
       
@@ -288,7 +288,7 @@ void loop()
 */
       // send SMS content
       Serial.print(FONASMSbuffer);
-      Serial.println("#");
+      Serial.print("#");
 
       // delete sent SMS now!
       if (deleteSMSafterTransfer == true)
@@ -299,7 +299,7 @@ void loop()
           Serial.print("*m");
           Serial.print(smsn);
           Serial.print("=Error deleting SMS.");
-          Serial.println("#");
+          Serial.print("#");
         }
       }
     }
