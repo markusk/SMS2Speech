@@ -6,6 +6,9 @@
 
 QT       += core gui
 
+# CONFIG += c++11
+QMAKE_CXXFLAGS += -stdlib=libc++
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = SMS2Speech
