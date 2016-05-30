@@ -144,7 +144,7 @@ bool InterfaceAvr::sendString(QString string, QString callingClassName)
 		for (int i=0; i<string.length(); i++)
 		{
 			// char by char
-			if (sendChar(string.at(i).toAscii(), callingClassName) == false)
+			if (sendChar(string.at(i).toLatin1() , callingClassName) == false)
 			{
 				return false;
 			}
