@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT		+= core gui
+QT		+= serialport
 
 # CONFIG += c++11
 QMAKE_CXXFLAGS += -stdlib=libc++
@@ -18,7 +19,7 @@ TEMPLATE = app
 SOURCES += main.cpp\
 			mainwindow.cpp \
 			circuit.cpp \
-			direcsSerial.cpp \
+			qtSerial.cpp \
 			interfaceAvr.cpp \
 			QtSpeech_mac.cpp \
 			speakThread.cpp
@@ -27,7 +28,7 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
 			circuit.h \
-			direcsSerial.h \
+			qtSerial.cpp \
 			interfaceAvr.h \
 			QtSpeech.h \
 			speakThread.h
