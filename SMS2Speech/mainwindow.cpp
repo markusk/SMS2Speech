@@ -44,6 +44,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	// USB port (serial connection) not opened
 	arduinoConnnected = false;
+
+	// get a list of available serial ports
+	serialPorts << QSerialPortInfo::availablePorts();
+
+	// put list to GUIs dropbox
+	for (int i=0; i<serialPorts.length(); i++)
+	{
+		ui->comboBoxSerialPorts->addItem(serialPorts.at(i).portName());
+	}
 }
 
 

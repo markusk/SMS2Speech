@@ -5,6 +5,7 @@
 #include <QDateTime>
 #include <QMutex>
 #include <QTimer>
+#include <QSerialPortInfo> // for getting a list of serial ports in the GUI
 
 #include "circuit.h"
 #include "interfaceAvr.h"
@@ -100,6 +101,7 @@ private:
 	QString serialPortMicrocontroller;
 	mutable QMutex *mutex; // make the threads thread-safe (e.g. senorThread, servo...)
 	bool arduinoConnnected;
+	QList <QSerialPortInfo> serialPorts; // will contain a list of available serial ports
 };
 
 #endif // MAINWINDOW_H
