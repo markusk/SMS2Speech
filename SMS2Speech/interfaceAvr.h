@@ -23,7 +23,7 @@
 
 #include <QtGlobal> // for Q_OS_* Makro!
 
-#include "direcsSerial.h"
+#include "qtSerial.h"
 
 #include <QFile>
 #include <QObject>
@@ -141,7 +141,7 @@ class InterfaceAvr : public QObject
 
 	private:
 		QString className;	/// this will contain the name of _this_ class at runtime for debug messages
-		DirecsSerial *serialPort;
+		QtSerial *serialPort;
 		QString answer; /// this will contain the event driven answer when data are received @sa receiveData Slot.
 		const int MAXCOMMANDLENGTH = 32; /// Max. length of a command from the Arduino.
 		bool commandStarted;
