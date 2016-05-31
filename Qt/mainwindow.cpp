@@ -79,7 +79,7 @@ void MainWindow::on_pushButtonConnect_clicked()
 		//-------------------------------------------------------
 		// Open serial port from Arduino for communication
 		//-------------------------------------------------------
-		serialPortMicrocontroller = ui->lineEditUSBPort->text();
+		serialPortMicrocontroller = ui->comboBoxSerialPorts->currentText();
 
 		emit message(QString("Opening serial port %1...").arg(serialPortMicrocontroller));
 

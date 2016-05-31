@@ -77,16 +77,6 @@
          </item>
         </layout>
        </item>
-       <item>
-        <widget class="QLineEdit" name="lineEditUSBPort">
-         <property name="statusTip">
-          <string>Path to USB device. Can be changed manually.</string>
-         </property>
-         <property name="text">
-          <string>/dev/tty.usbserial-A5005BPZ</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
      <item row="1" column="0">
