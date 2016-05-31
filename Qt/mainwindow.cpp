@@ -76,10 +76,10 @@ void MainWindow::on_pushButtonConnect_clicked()
 {
 	if (arduinoConnnected == false)
 	{
-		//-------------------------------------------------------
+		//----------------------------------------------------------------------------------------------------
 		// Open serial port from Arduino for communication
-		//-------------------------------------------------------
-		serialPortMicrocontroller = ui->comboBoxSerialPorts->currentText();
+		//----------------------------------------------------------------------------------------------------
+		serialPortMicrocontroller = serialPorts.at(ui->comboBoxSerialPorts->currentIndex()).systemLocation();
 
 		emit message(QString("Opening serial port %1...").arg(serialPortMicrocontroller));
 
