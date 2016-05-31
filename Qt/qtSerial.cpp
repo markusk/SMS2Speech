@@ -35,9 +35,18 @@ QtSerial::~QtSerial()
 }
 
 
-int QtSerial::openPort(QString port, int baudrate)
+int QtSerial::openPort(QString portName, int baudrate)
 {
-	return 1;
+	serialPort.setPortName(portName);
+	serialPort.setBaudRate(baudrate);
+
+	if (!serialPort.open(QIODevice::ReadOnly))
+	{
+		emit message(QString("<font color=\"#FF0000\">ERROR %1 opening %2.</font>").arg(serialPort.error()).arg(portName));
+		return -1;
+	}
+
+	return 0;
 }
 
 
@@ -303,7 +312,7 @@ int QtSerial::readData(unsigned char *buf, int nChars, QString callingClassName)
 }
 
 
-int QtSerial::closePort()
+void QtSerial::close()
 {
-  return close(mDev_fd);
+  serialPort.close();
 }

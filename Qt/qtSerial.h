@@ -84,8 +84,12 @@ class QtSerial : public QObject
 		**/
 		int openPort(char *dev_name, int baudrate);
 
-		/// new QtSerialPort method
-		int openPort(QString port, int baudrate);
+		/**
+		new QtSerialPort method
+
+		@return -1 in case of an error
+		**/
+		int openPort(QString portName, int baudrate);
 
 
 		/**
@@ -116,10 +120,8 @@ class QtSerial : public QObject
 
 		/**
 		Closes the serial port.
-
-		@return the results reported by close.
 		**/
-		int closePort();
+		void close();
 
 
 	signals:

@@ -72,7 +72,7 @@ bool InterfaceAvr::openComPort(QString comPort)
 void InterfaceAvr::closeComPort()
 {
 	// using qtSerial
-	serialPort->closePort();
+	serialPort->close();
 }
 
 
