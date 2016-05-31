@@ -53,6 +53,14 @@ MainWindow::MainWindow(QWidget *parent) :
 	{
 		ui->comboBoxSerialPorts->addItem(serialPorts.at(i).portName());
 	}
+
+	// look for the first "tty.*" entry and choose it
+	int listIndex = ui->comboBoxSerialPorts->findText("usbserial", Qt::MatchContains);
+
+	if (listIndex != -1)
+	{
+		ui->comboBoxSerialPorts->setCurrentIndex(listIndex);
+	}
 }
 
 
