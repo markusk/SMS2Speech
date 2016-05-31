@@ -28,7 +28,7 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
 			circuit.h \
-			qtSerial.cpp \
+			qtSerial.h \
 			interfaceAvr.h \
 			QtSpeech.h \
 			speakThread.h
