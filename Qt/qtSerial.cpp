@@ -35,6 +35,12 @@ QtSerial::~QtSerial()
 }
 
 
+int QtSerial::openPort(QString port, int baudrate)
+{
+	return 1;
+}
+
+
 int QtSerial::openPort(char *dev_name, int baudrate)
 {
 	struct termios  options;

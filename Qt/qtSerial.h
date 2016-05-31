@@ -22,6 +22,9 @@
 #ifndef QT_SERIAL_H
 #define QT_SERIAL_H
 
+#include <QtSerialPort/QSerialPort>
+#include <QTextStream>
+
 #include <errno.h>
 #include <fcntl.h>
 #include <math.h>
@@ -81,6 +84,10 @@ class QtSerial : public QObject
 		**/
 		int openPort(char *dev_name, int baudrate);
 
+		/// new QtSerialPort method
+		int openPort(QString port, int baudrate);
+
+
 		/**
 		Clears the read buffer.
 
@@ -125,7 +132,7 @@ class QtSerial : public QObject
 
 	private:
 		QString className;	/// this will contain the name of this class at runtime for debug messages
-
+		QSerialPort serialPort; /// the serial port
 		int mDev_fd; //! the file descriptor of the serial port
 };
 
