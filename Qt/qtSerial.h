@@ -51,6 +51,7 @@
 
 #define READ_TIMEOUT          250000      ///       (the timout for serial reading in microseconds! s.a. 'select' command in @sa readAtmelPort)
 #define READ_TIMEOUT_ATMEL    500000      /// 0,25s (the timout for serial reading in microseconds! s.a. 'select' command in @sa readAtmelPort)
+#define NEW_READ_TIMEOUT		5000      /// 0,5s (the timout for serial reading in ms
 #define _POSIX
 
 #include <QtGlobal>
@@ -113,7 +114,7 @@ class QtSerial : public QObject
 		@param *buf Pointer to unsigned char buffer for the data to be read.
 		@param nChars Number of bytes to be written (<= size of the buffer array).
 		@param callingClassName may contain the name of the calling class. This is for debug messages only.
-		@return The number of bytes read.
+		@return The number of bytes read, ot -1 on error.
 		 */
 		int readData(unsigned char *buf, int nChars, QString callingClassName = "none");
 

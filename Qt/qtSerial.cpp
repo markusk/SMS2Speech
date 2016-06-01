@@ -242,6 +242,34 @@ int QtSerial::writeData(unsigned char *c, QString callingClassName)
 
 int QtSerial::readData(unsigned char *buf, int nChars, QString callingClassName)
 {
+	// read available data
+	QByteArray readData = serialPort.readAll();
+
+	// wait 5000ms for all data received
+	while (serialPort.waitForReadyRead(NEW_READ_TIMEOUT))
+	{
+		readData.append(serialPort.readAll());
+	}
+
+	if (serialPort.error() == QSerialPort::ReadError)
+	{
+		emit message(QString("<font color=\"#FF0000\">ERROR '%1' <br>when reading data in QtSerial::readData called from %2.</font>").arg(serialPort.errorString()).arg(callingClassName));
+		return -1;
+	}
+	else
+	{
+		if (serialPort.error() == QSerialPort::TimeoutError && readData.isEmpty())
+		{
+			emit message(QString("<font color=\"#FF0000\">No data available within %1 ms in QtSerial::readData called from %2.</font>").arg(NEW_READ_TIMEOUT).arg(callingClassName));
+			return -1;
+		}
+	}
+
+// PROVIDE DATA < < < <
+	standardOutput << readData << endl;
+
+
+	/* direcsSerial code:
 	//
 	// Original code from method readPort
 	// Only using the local member dev_fd, instead of serial ports from laser scanner struct
@@ -309,6 +337,8 @@ int QtSerial::readData(unsigned char *buf, int nChars, QString callingClassName)
 		}
 	}
 	return bytes_read;
+
+*/
 }
 
 
