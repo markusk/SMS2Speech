@@ -23,7 +23,6 @@
 #define QT_SERIAL_H
 
 #include <QtSerialPort/QSerialPort>
-#include <QTextStream>
 
 #include <errno.h>
 #include <fcntl.h>
